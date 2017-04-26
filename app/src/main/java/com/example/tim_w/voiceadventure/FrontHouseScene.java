@@ -45,6 +45,9 @@ public class FrontHouseScene implements Scene {
             case "OPEN":
             case "CHECK":
             case "LOOK":
+                if(command.equals("")){
+                    return this._desc;
+                }
                 if(command.contains("MAILBOX")){
                     if(!this.mailboxOpen || this.sceneItems.contains(key)){
                         this.mailboxOpen = true;
@@ -55,14 +58,15 @@ public class FrontHouseScene implements Scene {
                 }else{
                     return "Input unknown. Try something else.";
                 }
+
             case "TAKE":
-                if(command.equalsIgnoreCase("KEY")){
+                if(command.contains("KEY")){
                     if(this.mailboxOpen && this.sceneItems.contains(key)){
                         this._inventory.addItem(key);
                         this.sceneItems.remove(key);
                         return "You put the key in your bag.";
                     }
-                }else if(command.equalsIgnoreCase("LANTERN") && this.sceneItems.contains(lantern)){
+                }else if(command.contains("LANTERN") && this.sceneItems.contains(lantern)){
                     this._inventory.addItem(lantern);
                     this.sceneItems.remove(lantern);
                     this._desc = "You stand before a dark, broken down house. The front door is locked. There is a mailbox.";
@@ -96,16 +100,17 @@ public class FrontHouseScene implements Scene {
         switch(keyword){
             case "OPEN":
             case "ENTER":
-                if(object.equalsIgnoreCase("DOOR")){
+                if(object.contains("DOOR")){
                     if(this._inventory.checkItem("key")){
                         Scene nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY());
                         map.setCurrPos(currPos.getX() + 1, currPos.getY());
                         nextScene.setInventory(this._inventory);
+                        this._desc = "You stand before a dark, broken down house. The front door is open. There is a mailbox.";
                         return nextScene;
                     }else{
                         this.tView.setText("The door is locked.");
                     }
-                }else if(object.equalsIgnoreCase("MAILBOX")){
+                }else if(object.contains("MAILBOX")){
                     String result = this.performAction("OPEN", "MAILBOX");
                     this.tView.setText(result);
                 }
