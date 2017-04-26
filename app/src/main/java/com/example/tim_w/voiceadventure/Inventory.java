@@ -10,21 +10,25 @@ import java.util.Set;
 
 public class Inventory {
     private Set<Item> items;
+    private Set<String> itemNames;
 
     public Inventory(){
         items = new HashSet<Item>();
+        itemNames = new HashSet<String>();
     }
 
     public void addItem(Item item){
         items.add(item);
+        itemNames.add(item.getName());
     }
 
-    public void removeItem(String item){
+    public void removeItem(Item item){
         items.remove(item);
+        itemNames.remove(item.getName());
     }
 
-    public boolean checkItem(String item){
-        return items.contains(item);
+    public boolean checkItem(String itemName){
+        return itemNames.contains(itemName);
     }
 
 }

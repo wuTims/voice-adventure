@@ -10,16 +10,35 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.tim_w.voiceadventure.MainActivity">
 
-    <TextView
-        android:id="@+id/txtFromSpeech"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="100dp"
-        android:textColor="@color/black"
-        android:textSize="26dp"
-        android:text="Hello World!" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/txtFromSpeech"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/black"
+            android:textSize="26dp"
+            android:text="Hello World!" />
+        <TextView
+            android:id="@+id/txtFromDesc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="100dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:text="" />
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:layout_width="wrap_content"

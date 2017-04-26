@@ -8,11 +8,13 @@ public class AdventureMap {
     private Scene[][] map;
     private int height;
     private int width;
+    private Position currPos;
 
     public AdventureMap(int height, int width){
         this.height = height;
         this.width = width;
         this.map = new Scene[height][width];
+        this.currPos = new Position(0, 0);
     }
 
     public void setSceneAtPosition(Scene scene, int x, int y){
@@ -24,6 +26,14 @@ public class AdventureMap {
             return null;
         }
         return this.map[y][x];
+    }
+
+    public void setCurrPos(int x, int y){
+        this.currPos.updatePos(x, y);
+    }
+
+    public Position getCurrPos(){
+        return this.currPos;
     }
 
 }

@@ -74,8 +74,6 @@ public class ShakeListener implements SensorEventListener {
 
                 double acceleration = Math.sqrt(Math.pow(x,2) + Math.pow(y,2) + Math.pow(z,2)) - SensorManager.GRAVITY_EARTH;
 
-                Log.d("TAG", "Accleration: " + acceleration + "m/s^2");
-
                 if(acceleration > SHAKE_THRESHOLD){
                     mShakeCount++;
                     if(mShakeCount >= SHAKE_COUNT && (currTime - lastShake) > MIN_TIME_BETWEEN_SHAKE_MILLIS){

@@ -1,5 +1,6 @@
 package com.example.tim_w.voiceadventure;
 
+import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.hardware.SensorManager;
 import android.os.Vibrator;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
+import android.speech.tts.Voice;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,12 +20,14 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
 
     private TextView txtFromSpeech;
+    private TextView txtFromDesc;
     private final int REQ_CODE_SPEECH_INPUT = 1;
     private final String UTTERANCE_ID = "VoiceAdventure";
 
@@ -31,6 +35,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private TextToSpeech tts;
 
+    private AdventureMap map;
+    private Scene currentScene;
+    private Inventory inventory;
+
+    @TargetApi(21)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +47,11 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         final Vibrator vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
         txtFromSpeech = (TextView) findViewById(R.id.txtFromSpeech);
+        txtFromDesc = (TextView) findViewById(R.id.txtFromDesc);
 
         tts = new TextToSpeech(this, this);
+
+
 
         shaker = new ShakeListener(this);
         shaker.setOnShakeListener(new ShakeListener.OnShakeListener() {
@@ -49,6 +61,24 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 promptSpeechInput();
             }
         });
+
+        inventory = new Inventory();
+
+        map = new AdventureMap(1, 3);
+        loadMap();
+        currentScene.load(txtFromDesc);
+        speakOut();
+    }
+
+    private void loadMap(){
+        Scene intro = new IntroScene(this.inventory);
+        Scene frontHouse = new FrontHouseScene(this.inventory);
+        Scene enterHouse = new EnterHouseScene();
+        map.setSceneAtPosition(intro, 0, 0);
+        map.setSceneAtPosition(frontHouse, 1, 0);
+        map.setSceneAtPosition(enterHouse, 2, 0);
+
+        currentScene = intro;
     }
 
     private void promptSpeechInput(){
@@ -73,11 +103,40 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         if(requestCode == REQ_CODE_SPEECH_INPUT && resultCode == RESULT_OK && data != null){
             ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            txtFromSpeech.setText(result.get(0));
-            if(result.get(0).equalsIgnoreCase("start game")){
-                speakOut();
-            }
+            String text = result.get(0);
+            txtFromSpeech.setText(text);
+            text = text.toUpperCase();
+            String[] speechInput = text.split(" ", 2);
+            String keyword = speechInput[0];
+            String command = "";
+            String output = "";
+            if(speechInput.length > 1) command = speechInput[1];
 
+            Scene tempScene = null;
+            switch(keyword){
+                case "GO":
+                case "NAVIGATE":
+                    tempScene = this.currentScene.navigate(command, this.map);
+                    if(tempScene != null){
+                        this.currentScene = tempScene;
+                        this.currentScene.load(txtFromDesc);
+                    }
+                    break;
+                case "OPEN":
+                case "ENTER":
+                    tempScene = this.currentScene.navigate(keyword, command, this.map);
+                    if(tempScene != null){
+                        this.currentScene = tempScene;
+                        this.currentScene.load(txtFromDesc);
+                    }
+                    break;
+                default:
+                    output = this.currentScene.performAction(keyword, command);
+                    txtFromDesc.setText(output);
+                    break;
+
+            }
+            speakOut();
         }
     }
 
@@ -101,6 +160,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onDestroy();
     }
 
+
+    @TargetApi(21)
     @Override
     public void onInit(int status) {
         if(status == TextToSpeech.SUCCESS){
@@ -110,15 +171,28 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     || result == TextToSpeech.LANG_NOT_SUPPORTED){
                 Log.e("TTS", "This Language is not supported");
             }
+
+            for(Voice v : tts.getVoices()){
+                Log.v("VOICE", v.getName());
+            }
+            tts.setSpeechRate(2f);
+            tts.setPitch(0.3f);
+
+
+            speakOut();
         }else{
             Log.e("TTS", "INIT FAILED!");
         }
     }
 
+    @TargetApi(21)
     private void speakOut() {
-        String text = txtFromSpeech.getText().toString();
         String exScene = "Team rocket had stolen four of your Poke e mawn. You followed them to a haunted house. The front door is locked. There is a mailbox to the right and a lantern to the left.";
         String testScene = "Articuno, Pikachu, Charmander, Onyx";
-        tts.speak(exScene, TextToSpeech.QUEUE_FLUSH, null);
+        tts.speak(txtFromDesc.getText().toString(), TextToSpeech.QUEUE_FLUSH, null, UTTERANCE_ID);
+    }
+
+    public AdventureMap getMap() {
+        return this.map;
     }
 }
