@@ -6,13 +6,16 @@ import android.widget.TextView;
  * Created by gswu on 4/26/2017.
  */
 
-public class ArticunosScene implements Scene {
+public class ArticunoScene implements Scene {
+    private Inventory _inventory;
     private String _desc;
     private TextView tView;
     private boolean readTag = false;
-    private boolean articuno = false;
+    Item Articuno;
 
-    public ArticunosScene() {
+    public ArticunoScene() {
+        Articuno = new Item("Articuno", "Articuno, the legendary flying ice pokemon. " +
+                "The flapping of its wings creates a blizzard that chills the air freezing everything");
         this._desc = "You climbed to the top of the icy mountain to see a door with scribbles on the door you can not decipher.";
     }
 
@@ -31,6 +34,7 @@ public class ArticunosScene implements Scene {
                             "Always watching. Never speaking. Always lurking. Never seen. The answer is.";
                 }
                 if (command.contains("POKEBALL")) {
+                    _inventory.addItem(Articuno);
                     if (readTag) {
                         return "Articuno returns to its pokeball. Articuno, the legendary flying ice pokemon. " +
                                 "The flapping of its wings creates a blizzard that chills the air freezing everything";
@@ -51,7 +55,6 @@ public class ArticunosScene implements Scene {
                 }
             case "AIR":
                 if (command.equals("")) {
-                    articuno = true;
                     return "The door opens and you see Articuno sleeping. There is a tag on its wings.";
                 }
             case "EXAMINE":
@@ -63,6 +66,7 @@ public class ArticunosScene implements Scene {
             case "TAKE":
             case "CAPTURE":
                 if (command.contains("ARTICUNO")) {
+                    _inventory.addItem(Articuno);
                     if (readTag) {
                         return "Articuno returns to its pokeball. Articuno, the legendary flying ice pokemon. " +
                                 "The flapping of its wings creates a blizzard that chills the air freezing everything";
@@ -84,6 +88,7 @@ public class ArticunosScene implements Scene {
             case "WEST":
                 nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() - 1);
                 map.setCurrPos(currPos.getX(), currPos.getY() - 1);
+                nextScene.setInventory(this._inventory);
                 return nextScene;
         }
         return null;
@@ -101,6 +106,6 @@ public class ArticunosScene implements Scene {
 
     @Override
     public void setInventory(Inventory inventory) {
-
+        this._inventory = inventory;
     }
 }

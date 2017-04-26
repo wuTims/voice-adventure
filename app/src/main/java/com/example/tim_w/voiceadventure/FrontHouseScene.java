@@ -49,6 +49,7 @@ public class FrontHouseScene implements Scene {
                 }
                 if(command.contains("MAILBOX")){
                     if(!this.mailboxOpen || this.sceneItems.contains(key)){
+                        this.mailboxOpen = true;
                         return "There's a key in the mailbox.";
                     } else {
                         return "It's a mailbox with nothing inside";

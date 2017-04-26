@@ -11,10 +11,14 @@ public class CharmanderScene implements Scene {
     private TextView tView;
     private boolean frozen = false;
     private boolean readTag = false;
-    private boolean articuno; //idk what to do
+    private Item Charmander;
+    private Inventory _inventory;
 
-    public CharmanderScene(boolean articuno) {
-        this.articuno = articuno;
+    public CharmanderScene(Inventory inventory) {
+        this._inventory = inventory;
+        Charmander = new Item("Charmander", "Charmander, the fire pokemon. " +
+                "It’s tail is lit with fire. Using flamethrower from its mouth, " +
+                        "it can burn through anything");
         if (frozen) {
             this._desc = "You climb to the top of the volcano. You see your Charmander in the middle" +
                     " of a frozen pit of lava. It has a tag on its tail. It’s cool enough now.";
@@ -35,13 +39,14 @@ public class CharmanderScene implements Scene {
         switch (keyword) {
             case "USE":
                 if (command.contains("BLIZZARD")) {
-                    if (articuno) {
+                    if (_inventory.checkItem("Articuno")) {
                         return "Articuno use blizzard. With a giant flap of its wings it freezes the lava around Charmander.";
                     } else {
                         return "None of your Pokemons knows Blizzard.";
                     }
                 }
                 if (command.contains("POKEBALL")) {
+                    _inventory.addItem(Charmander);
                     if (readTag) {
                         return "Charmander returns to its pokeball. Charmander, the fire pokemon. " +
                                 "It’s tail is lit with fire. Using flamethrower from its mouth, " +
@@ -62,6 +67,7 @@ public class CharmanderScene implements Scene {
             case "TAKE":
             case "CAPTURE":
                 if (command.contains("CHARMANDER")) {
+                    _inventory.addItem(Charmander);
                     if (readTag) {
                         return "Charmander returns to its pokeball. Charmander, the fire pokemon. " +
                                 "It’s tail is lit with fire. Using flamethrower from its mouth, " +
@@ -84,6 +90,7 @@ public class CharmanderScene implements Scene {
             case "SOUTH":
                 nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY());
                 map.setCurrPos(currPos.getX() + 1, currPos.getY());
+                nextScene.setInventory(this._inventory);
                 return nextScene;
         }
         return null;
@@ -101,6 +108,6 @@ public class CharmanderScene implements Scene {
 
     @Override
     public void setInventory(Inventory inventory) {
-
+        this._inventory = inventory;
     }
 }

@@ -9,12 +9,17 @@ import android.widget.TextView;
 public class PikachuScene implements Scene {
     private String _desc;
     private TextView tView;
-    private boolean pikachu = false;
+    private Inventory _inventory;
+    private Item Pikachu;
     private boolean readTag = false;
     private boolean lockDoor = false;
 
 
-    public PikachuScene() {
+    public PikachuScene(Inventory inventory) {
+        Pikachu = new Item("Pikachu","Pikachu, the electric mouse pokemon." +
+                " It can use thunderbolt by generating electricity from the two " +
+                "electric pouches on its cheeks.");
+        this._inventory = inventory;
         this._desc = "As you enter the power plant the door behind you closes trapping you in " +
                 "the room. Your Pikachu is trapped inside a glass box in front of you. There is " +
                 "a tag on its ears. There is a control panel in front of the box.";
@@ -36,7 +41,7 @@ public class PikachuScene implements Scene {
                 }
                 if (command.contains("POKEBALL")) {
                     if (readTag) {
-                        pikachu = true;
+                        _inventory.addItem(Pikachu);
                         return "Pikachu returns to its pokeball. Pikachu, the electric mouse pokemon." +
                                 " It can use thunderbolt by generating electricity from the two " +
                                 "electric pouches on its cheeks.";
@@ -45,7 +50,7 @@ public class PikachuScene implements Scene {
                     }
                 }
                 if (command.contains("THUNDERBOLT")) {
-                    if(pikachu){
+                    if(_inventory.checkItem("Pikachu")){
                         lockDoor = false;
                         return "Pikachu use thunderbolt at the door. The door opens.";
                     } else {
@@ -67,7 +72,7 @@ public class PikachuScene implements Scene {
             case "CAPTURE":
                 if (command.contains("PIKACHU")) {
                     if (readTag) {
-                        pikachu = true;
+                        _inventory.addItem(Pikachu);
                         return "Pikachu returns to its pokeball. Pikachu, the electric mouse pokemon." +
                                 " It can use thunderbolt by generating electricity from the two " +
                                 "electric pouches on its cheeks.";
@@ -92,6 +97,7 @@ public class PikachuScene implements Scene {
                 } else {
                     nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY());
                     map.setCurrPos(currPos.getX() + 1, currPos.getY());
+                    nextScene.setInventory(this._inventory);
                     return nextScene;
                 }
         }
@@ -110,6 +116,6 @@ public class PikachuScene implements Scene {
 
     @Override
     public void setInventory(Inventory inventory) {
-
+        this._inventory = inventory;
     }
 }
