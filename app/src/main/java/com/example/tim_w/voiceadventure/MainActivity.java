@@ -4,10 +4,6 @@ import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Vibrator;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
@@ -18,9 +14,6 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -64,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         inventory = new Inventory();
 
-        map = new AdventureMap(1, 3);
+        map = new AdventureMap(3, 5);
         loadMap();
         currentScene.load(txtFromDesc);
         speakOut();
@@ -74,9 +67,17 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         Scene intro = new IntroScene(this.inventory);
         Scene frontHouse = new FrontHouseScene(this.inventory);
         Scene enterHouse = new EnterHouseScene();
-        map.setSceneAtPosition(intro, 0, 0);
-        map.setSceneAtPosition(frontHouse, 1, 0);
-        map.setSceneAtPosition(enterHouse, 2, 0);
+        Scene threePath = new ThreePathsScene();
+        Scene articuno = new ArticunoScene();
+        Scene charmander = new CharmanderScene();
+        Scene pikachu = new PikachuScene();
+        map.setSceneAtPosition(intro, 0, 1);
+        map.setSceneAtPosition(frontHouse, 1, 1);
+        map.setSceneAtPosition(enterHouse, 2, 1);
+        map.setSceneAtPosition(enterHouse, 2, 1);
+        map.setSceneAtPosition(articuno, 4, 0);
+        map.setSceneAtPosition(charmander, 3, 1);
+        map.setSceneAtPosition(pikachu, 4, 2);
 
         currentScene = intro;
     }

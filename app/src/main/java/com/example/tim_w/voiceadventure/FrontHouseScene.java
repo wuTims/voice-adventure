@@ -9,7 +9,6 @@ import java.util.HashSet;
  */
 
 
-
 public class FrontHouseScene implements Scene {
     private Inventory _inventory;
     private String _desc;
@@ -18,7 +17,7 @@ public class FrontHouseScene implements Scene {
     private Item lantern, key, pokedex;
     private TextView tView;
 
-    public FrontHouseScene(Inventory inventory){
+    public FrontHouseScene(Inventory inventory) {
         this._inventory = inventory;
         this._desc = "You stand before a dark, broken down house. The front door is locked. There is a mailbox and a lantern on the ground.";
 
@@ -38,12 +37,12 @@ public class FrontHouseScene implements Scene {
     @Override
     public void load(TextView v) {
         v.setText(this._desc);
-        if(this.tView == null) this.tView = v;
+        if (this.tView == null) this.tView = v;
     }
 
     @Override
     public String performAction(String keyword, String command) {
-        switch(keyword){
+        switch (keyword) {
             case "OPEN":
             case "CHECK":
             case "LOOK":
@@ -59,9 +58,10 @@ public class FrontHouseScene implements Scene {
                     }else if(this.sceneItems.contains(pokedex)) {
                         return "There's a pokedex in the mailbox.";
                     }else{
+
                         return "It's a mailbox with nothing inside";
                     }
-                }else{
+                } else {
                     return "Input unknown. Try something else.";
                 }
 
@@ -87,7 +87,7 @@ public class FrontHouseScene implements Scene {
                 if(this.mailboxOpen && this.sceneItems.contains(key)){
                     addItem(key);
                     return "You put the key in your bag.";
-                }else{
+                } else {
                     return "Input unknown. Try something else.";
                 }
             default:
@@ -101,9 +101,9 @@ public class FrontHouseScene implements Scene {
     }
 
     @Override
-    public Scene navigate(String keyword, String object, AdventureMap map){
+    public Scene navigate(String keyword, String object, AdventureMap map) {
         Position currPos = map.getCurrPos();
-        switch(keyword){
+        switch (keyword) {
             case "OPEN":
             case "ENTER":
                 if(object.contains("DOOR")){
@@ -113,7 +113,7 @@ public class FrontHouseScene implements Scene {
                         nextScene.setInventory(this._inventory);
                         this._desc = "You stand before a dark, broken down house. The front door is open. There is a mailbox.";
                         return nextScene;
-                    }else{
+                    } else {
                         this.tView.setText("The door is locked.");
                     }
                 }else if(object.contains("MAILBOX")){

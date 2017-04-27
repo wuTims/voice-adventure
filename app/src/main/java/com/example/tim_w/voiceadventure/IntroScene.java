@@ -27,7 +27,6 @@ public class IntroScene implements Scene {
 
     @Override
     public String performAction(String keyword, String command) {
-
         return "Input unknown. Try something else.";
     }
 

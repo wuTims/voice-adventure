@@ -14,7 +14,7 @@ public class AdventureMap {
         this.height = height;
         this.width = width;
         this.map = new Scene[height][width];
-        this.currPos = new Position(0, 0);
+        this.currPos = new Position(0, 1);
     }
 
     public void setSceneAtPosition(Scene scene, int x, int y){
