@@ -79,12 +79,14 @@ public class EnterHouseScene implements Scene {
                             case 2:
                                 return "There is a book and a magnifier";
                             case 3:
-                                return "There is a book.";
+                                return "There is a magnifier and four poakaballs.";
                             case 4:
-                                return "There is a magnifier.";
+                                return "There is a book.";
                             case 5:
-                                return "There are four poakaballs.";
+                                return "There is a magnifier.";
                             case 6:
+                                return "There are four poakaballs.";
+                            case 7:
                                 return "It is an old dusty table.";
                         }
                     }
@@ -151,14 +153,16 @@ public class EnterHouseScene implements Scene {
             return 1;
         } else if (sceneItems.contains(this.book) && sceneItems.contains(this.mag_glass)) {
             return 2;
-        } else if (sceneItems.contains(this.book)) {
+        } else if (sceneItems.contains(this.pokeballs) && sceneItems.contains(this.mag_glass)) {
             return 3;
-        } else if (sceneItems.contains(this.mag_glass)) {
+        } else if (sceneItems.contains(this.book)) {
             return 4;
-        } else if (sceneItems.contains(this.pokeballs)) {
+        } else if (sceneItems.contains(this.mag_glass)) {
             return 5;
+        } else if (sceneItems.contains(this.pokeballs)) {
+            return 6;
         }
-        return 6;
+        return 7;
     }
 
     private void addItem(Item item) {
@@ -178,8 +182,8 @@ public class EnterHouseScene implements Scene {
                     scribbleRead = true;
                     this.tView.setText("The door won't budge. There are Unknown symbols on the door that you can't decipher.");
                 } else if (deciphered) {
-                    Scene nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY());
-                    map.setCurrPos(currPos.getX() + 1, currPos.getY());
+                    Scene nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() - 1);
+                    map.setCurrPos(currPos.getX(), currPos.getY() - 1);
                     nextScene.setInventory(this._inventory);
                     return nextScene;
                 }

@@ -132,7 +132,16 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     break;
                 default:
                     output = this.currentScene.performAction(keyword, command);
-                    txtFromDesc.setText(output);
+                    if(output.equalsIgnoreCase("TELE")){
+                        tempScene = this.currentScene.navigate(output, this.map);
+                        if(tempScene != null){
+                            this.currentScene = tempScene;
+                            this.currentScene.load(txtFromDesc);
+                        }
+                    }else{
+                        txtFromDesc.setText(output);
+                    }
+
                     break;
 
             }
