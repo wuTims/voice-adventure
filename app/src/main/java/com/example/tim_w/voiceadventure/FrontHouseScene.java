@@ -78,7 +78,7 @@ public class FrontHouseScene implements Scene {
                 }else if(command.contains("POKEDEX") && this.sceneItems.contains(pokedex)){
                     addItem(pokedex);
                     return "You put the pokedex in your bag.";
-                }else{
+                } else{
                     return "Input unknown. Try something else.";
                 }
             case "TAKEE":
@@ -106,7 +106,8 @@ public class FrontHouseScene implements Scene {
         switch (keyword) {
             case "OPEN":
             case "ENTER":
-                if(object.contains("DOOR")){
+            case "UNLOCK":
+                if(object.contains("DOOR") || object.contains("HOUSE")){
                     if(this._inventory.checkItem("key")){
                         Scene nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY());
                         map.setCurrPos(currPos.getX() + 1, currPos.getY());

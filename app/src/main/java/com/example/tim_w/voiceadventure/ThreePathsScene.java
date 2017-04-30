@@ -13,7 +13,7 @@ public class ThreePathsScene implements Scene {
 
     public ThreePathsScene(Inventory inventory) {
         this._inventory = inventory;
-        this._desc = "You find yourself in a dimly lit cave. There are three paths. To the west there is a power plant. To the north is a volcano that looks like its about to erupt. To the east is a icy mountain.";
+        this._desc = "You find yourself in a dimly lit cave. There are three paths. To the south there is a power plant. To the west is a volcano that looks like its about to erupt. To the north is a icy mountain.";
     }
 
     @Override
@@ -33,17 +33,17 @@ public class ThreePathsScene implements Scene {
         Scene nextScene;
         switch(direction){
             case "NORTH": //ice
-                nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() + 1);
-                map.setCurrPos(currPos.getX(), currPos.getY() + 1);
-                nextScene.setInventory(this._inventory);
-                return nextScene;
-            case "SOUTH": //electric
                 nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() - 1);
                 map.setCurrPos(currPos.getX(), currPos.getY() - 1);
                 nextScene.setInventory(this._inventory);
                 return nextScene;
+            case "SOUTH": //electric
+                nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() + 1);
+                map.setCurrPos(currPos.getX(), currPos.getY() + 1);
+                nextScene.setInventory(this._inventory);
+                return nextScene;
             case "WEST": //fire
-                nextScene = map.getSceneAtPosition(currPos.getX() -1, currPos.getY());
+                nextScene = map.getSceneAtPosition(currPos.getX() - 1, currPos.getY());
                 map.setCurrPos(currPos.getX() - 1, currPos.getY());
                 nextScene.setInventory(this._inventory);
                 return nextScene;

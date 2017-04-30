@@ -34,22 +34,27 @@ public class AbraHouseScene implements Scene {
     public String performAction(String keyword, String command) {
         switch(keyword){
             case "USE":
+            case "USED":
             case "THROW":
                 if(command.contains("POKEBALLS") || command.contains("POKEBALL") && this._inventory.checkItem("pokeballs")){
                     addItem(abra);
-                    return "Abra returns to its Poakaball.";
+                    this._desc = "An empty room.";
+                    return "Abra returns to its Pokeball.";
+                } else if(command.contains("POKEBALLS") || command.contains("POKEBALL") && !this._inventory.checkItem("pokeballs")){
+                    return  "You don't have any pokeballs.";
                 }
                 if(command.contains("POKEDEX") && this._inventory.checkItem("abra")){
                     return "Abra, a pyschic type Poakamawn. It can use TELEPORT to transport to different locations.";
                 }
-                break;
+                return "Input unknown. Try something else.";
             case "ABRA":
                 if(command.contains("TELEPORT") && this._inventory.checkItem("abra") && tagExamined){
                     return "TELE";
                 }else if(command.contains("TELEPORT") && this._inventory.checkItem("abra") && !tagExamined){
                     return "The tag looks important. You might want to EXAMINE it first.";
+                }else{
+                    return "Input unknown. Try something else.";
                 }
-                break;
             case "READ":
             case "EXAMINE":
             case "CHECK":
@@ -58,9 +63,12 @@ public class AbraHouseScene implements Scene {
                     tagExamined = true;
                     return "The number 5 is written on the tag.";
                 }
+                if(command.equals("")){
+                    return this._desc;
+                }
+            default:
+                return "Input unknown. Try something else.";
         }
-
-        return null;
     }
 
     private void addItem(Item item) {

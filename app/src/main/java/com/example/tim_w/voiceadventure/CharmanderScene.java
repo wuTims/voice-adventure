@@ -14,8 +14,7 @@ public class CharmanderScene implements Scene {
     private Item Charmander;
     private Inventory _inventory;
 
-    public CharmanderScene(Inventory inventory) {
-        this._inventory = inventory;
+    public CharmanderScene() {
         Charmander = new Item("Charmander", "Charmander, the fire pokemon. " +
                 "It’s tail is lit with fire. Using flamethrower from its mouth, " +
                         "it can burn through anything");
@@ -37,6 +36,7 @@ public class CharmanderScene implements Scene {
     @Override
     public String performAction(String keyword, String command) {
         switch (keyword) {
+            case "USED":
             case "USE":
                 if (command.contains("BLIZZARD")) {
                     if (_inventory.checkItem("Articuno")) {
