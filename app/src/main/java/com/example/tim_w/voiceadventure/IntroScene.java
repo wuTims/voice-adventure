@@ -27,6 +27,15 @@ public class IntroScene implements Scene {
 
     @Override
     public String performAction(String keyword, String command) {
+        switch(keyword){
+            case "LOOK":
+                if(command.equals("")){
+                    return this._desc;
+                }
+                break;
+        }
+
+
         return "Input unknown. Try something else.";
     }
 

@@ -77,11 +77,12 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         map.setSceneAtPosition(intro, 0, 1);
         map.setSceneAtPosition(frontHouse, 1, 1);
         map.setSceneAtPosition(enterHouse, 2, 1);
+        map.setSceneAtPosition(abra, 2, 0);
         map.setSceneAtPosition(articuno, 4, 0);
         map.setSceneAtPosition(charmander, 3, 1);
         map.setSceneAtPosition(pikachu, 4, 2);
-        map.setSceneAtPosition(abra, 2, 0);
         map.setSceneAtPosition(threePath, 4, 1);
+        map.setCurrPos(0,0);
         currentScene = Introduction;
     }
 
@@ -118,6 +119,14 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             Scene tempScene = null;
             switch(keyword){
+                case "START":
+                    this.setTTS(1.8f, 0.35f);
+                    tempScene = this.currentScene.navigate("START", this.map);
+                    if(tempScene != null){
+                        this.currentScene = tempScene;
+                        this.currentScene.load(txtFromDesc);
+                    }
+                    break;
                 case "GO":
                 case "NAVIGATE":
                     tempScene = this.currentScene.navigate(command, this.map);
@@ -189,14 +198,18 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             for(Voice v : tts.getVoices()){
                 Log.v("VOICE", v.getName());
             }
-            tts.setSpeechRate(2f);
-            tts.setPitch(0.3f);
+            this.setTTS(1.2f, 0.55f);
 
 
             speakOut();
         }else{
             Log.e("TTS", "INIT FAILED!");
         }
+    }
+
+    private void setTTS(float rate, float pitch){
+        this.tts.setPitch(pitch);
+        this.tts.setSpeechRate(rate);
     }
 
     @TargetApi(21)

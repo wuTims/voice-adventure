@@ -11,13 +11,14 @@ public class Introduction implements Scene{
     private TextView tView;
 
     public Introduction(){
-        this._desc = "This is a voice adventure. \n" +
-                "To give a command, shake the device. \n" +
-                "To go in a direction, say GO direction. Like GO EAST. \n" +
-                "To take an item in a scene, say TAKE item. Like TAKE BOOK. \n" +
-                "To use an item, say USE item. Like USE KEY.\n" +
-                "\n" +
-                "At anytime if you want to repeat the scene description, say LOOK. ";
+        this._desc = "This is a voice adventure. " +
+                "To give a command, shake the device. " +
+                "To go in a direction, say GO direction, Like GO EAST. " +
+                "To take an item in a scene, say TAKE item, Like TAKE BOOK. " +
+                "To use an item, say USE item, Like USE KEY. " +
+                "You may also READ or EXAMINE certain items. "+
+                "If you want to repeat the scene description, say LOOK. " +
+                "To start the game, say START";
     }
 
     @Override
@@ -33,6 +34,14 @@ public class Introduction implements Scene{
 
     @Override
     public Scene navigate(String direction, AdventureMap map) {
+        Position currPos = map.getCurrPos();
+        switch(direction){
+            case "START":
+                Scene nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() + 1);
+                map.setCurrPos(currPos.getX(), currPos.getY() + 1);
+                return nextScene;
+        }
+
         return null;
     }
 

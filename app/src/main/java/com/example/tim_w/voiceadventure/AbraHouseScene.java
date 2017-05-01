@@ -37,16 +37,26 @@ public class AbraHouseScene implements Scene {
             case "USED":
             case "THROW":
                 if(command.contains("POKEBALLS") || command.contains("POKEBALL") && this._inventory.checkItem("pokeballs")){
-                    addItem(abra);
-                    this._desc = "An empty room.";
-                    return "Abra returns to its Pokeball.";
+                    if(tagExamined){
+                        addItem(abra);
+                        this._desc = "An empty room.";
+                        return "Abra returns to its Pokeball.";
+                    }else if(!tagExamined){
+                        return "The tag looks important. You might want to EXAMINE it first.";
+                    }
                 } else if(command.contains("POKEBALLS") || command.contains("POKEBALL") && !this._inventory.checkItem("pokeballs")){
                     return  "You don't have any pokeballs.";
                 }
                 if(command.contains("POKEDEX") && this._inventory.checkItem("abra")){
                     return "Abra, a pyschic type Poakamawn. It can use TELEPORT to transport to different locations.";
                 }
-                return "Input unknown. Try something else.";
+                if(command.contains("TELEPORT") && this._inventory.checkItem("abra") && tagExamined){
+                    return "TELE";
+                }else if(command.contains("TELEPORT") && this._inventory.checkItem("abra") && !tagExamined){
+                    return "The tag looks important. You might want to EXAMINE it first.";
+                }else{
+                    return "Input unknown. Try something else.";
+                }
             case "ABRA":
                 if(command.contains("TELEPORT") && this._inventory.checkItem("abra") && tagExamined){
                     return "TELE";
