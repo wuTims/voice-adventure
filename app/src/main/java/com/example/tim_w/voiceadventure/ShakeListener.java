@@ -12,11 +12,11 @@ import android.util.Log;
  */
 
 public class ShakeListener implements SensorEventListener {
-    private static final float SHAKE_THRESHOLD = 3.8f;
-    private static final int MIN_TIME_BETWEEN_SHAKE_MILLIS = 1000;
-    private static final int SHAKE_COUNT = 4;
+    private static final float SHAKE_THRESHOLD = 3.6f;
+    private static final int MIN_TIME_BETWEEN_SHAKE_MILLIS = 500;
+    private static final int SHAKE_COUNT = 3;
     private static final int SHAKE_TIMEOUT = 500;
-    private static final float TIME_THRESHOLD = 100;
+    private static final float TIME_THRESHOLD = 75;
     private long lastUpdate = 0;
     private long lastShake = 0;
     private SensorManager sensorManager;

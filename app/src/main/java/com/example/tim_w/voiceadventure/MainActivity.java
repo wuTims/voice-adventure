@@ -64,22 +64,25 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
 
     private void loadMap(){
+        Scene Introduction = new Introduction();
         Scene intro = new IntroScene(this.inventory);
         Scene frontHouse = new FrontHouseScene(this.inventory);
         Scene enterHouse = new EnterHouseScene();
         Scene threePath = new ThreePathsScene(this.inventory);
         Scene articuno = new ArticunoScene();
-        Scene charmander = new CharmanderScene(this.inventory);
-        Scene pikachu = new PikachuScene(this.inventory);
+        Scene charmander = new CharmanderScene();
+        Scene pikachu = new PikachuScene();
+        Scene abra = new AbraHouseScene();
+        map.setSceneAtPosition(Introduction, 0, 0);
         map.setSceneAtPosition(intro, 0, 1);
         map.setSceneAtPosition(frontHouse, 1, 1);
-        map.setSceneAtPosition(enterHouse, 2, 1);
         map.setSceneAtPosition(enterHouse, 2, 1);
         map.setSceneAtPosition(articuno, 4, 0);
         map.setSceneAtPosition(charmander, 3, 1);
         map.setSceneAtPosition(pikachu, 4, 2);
-
-        currentScene = intro;
+        map.setSceneAtPosition(abra, 2, 0);
+        map.setSceneAtPosition(threePath, 4, 1);
+        currentScene = Introduction;
     }
 
     private void promptSpeechInput(){
@@ -125,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     break;
                 case "OPEN":
                 case "ENTER":
+                case "UNLOCK":
                     tempScene = this.currentScene.navigate(keyword, command, this.map);
                     if(tempScene != null){
                         this.currentScene = tempScene;

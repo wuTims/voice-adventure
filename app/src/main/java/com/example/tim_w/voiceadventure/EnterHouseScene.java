@@ -49,6 +49,7 @@ public class EnterHouseScene implements Scene {
             switch (keyword) {
                 case "USE":
                 case "USED":
+                case "TAKE":
                     if (command.contains("LANTERN") && this._inventory.checkItem("lantern")) {
                         lanternOn = true;
                         this._desc = "You stand in a large room with a door to the north and exit to the south. There is a table.";
@@ -58,11 +59,12 @@ public class EnterHouseScene implements Scene {
                     } else {
                         return "You can't use that right now.";
                     }
-                case "TAKE":
                 case "LOOK":
                 case "OPEN":
                 case "READ":
                     return "It's too dark to do anything. Maybe if you had some light...";
+                default:
+                    return "Input unknown. Try something else.";
             }
         } else {
             switch (keyword) {
@@ -73,19 +75,19 @@ public class EnterHouseScene implements Scene {
                         int resultID = checkItemsInScene(this.sceneItems);
                         switch (resultID) {
                             case 0:
-                                return "There is a book, magnifier, and four poakaballs.";
+                                return "There is a book, magnifier, and four pokeballs.";
                             case 1:
-                                return "There is a book and a four poakaballs.";
+                                return "There is a book and a four pokeballs.";
                             case 2:
                                 return "There is a book and a magnifier";
                             case 3:
-                                return "There is a magnifier and four poakaballs.";
+                                return "There is a magnifier and four pokeballs.";
                             case 4:
                                 return "There is a book.";
                             case 5:
                                 return "There is a magnifier.";
                             case 6:
-                                return "There are four poakaballs.";
+                                return "There are four pokeballs.";
                             case 7:
                                 return "It is an old dusty table.";
                         }
@@ -104,7 +106,6 @@ public class EnterHouseScene implements Scene {
                                 "Who am I?";
                     }
 
-                    break;
                 case "USE":
                 case "USED":
                     if (command.contains("BOOK") && this._inventory.checkItem("book") && scribbleRead) {
@@ -116,7 +117,6 @@ public class EnterHouseScene implements Scene {
                     } else if (command.contains("BOOK") && this._inventory.checkItem("book") && !scribbleRead) {
                         return "This isn't the time to use that.";
                     }
-                    break;
                 case "TAKE":
                     if (command.contains("BOOK") && this.sceneItems.contains(book)) {
                         addItem(this.book);
@@ -124,27 +124,27 @@ public class EnterHouseScene implements Scene {
                     } else if (command.contains("MAGNIFIER") && this.sceneItems.contains(mag_glass)) {
                         addItem(this.mag_glass);
                         return "You put the magnifier in your bag.";
-                    } else if (command.contains("POKEBALLS") || command.contains("POKEBALL") && this.sceneItems.contains(pokeballs)) {
+                    } else if (command.contains("POKEBALLS") || command.contains("POKEBALL")) {
                         addItem(this.pokeballs);
                         return "You put the pokeballs in your bag.";
-                    } else if (command.contains("ALL") && this.sceneItems.contains(book) && this.sceneItems.contains(mag_glass) && this.sceneItems.contains(pokeballs)) {
+                    } else if (command.contains("ALL")) {
                         addItem(this.book);
                         addItem(this.mag_glass);
                         addItem(this.pokeballs);
                         return "You put all the items in your bag.";
+                    } else {
+                        return "Input unknonw. Try something else.";
                     }
-                    break;
                 case "ICE":
                     if (command.equals("")) {
                         deciphered = true;
                         return "The door shatters and opens up a room to the north.";
                     }
-                    break;
+                default:
+                    return "Input unknown. Try something else.";
             }
+
         }
-
-
-        return null;
     }
 
     private int checkItemsInScene(HashSet<Item> sceneItems) {
@@ -182,13 +182,13 @@ public class EnterHouseScene implements Scene {
                 if (!deciphered) {
                     scribbleRead = true;
                     this.tView.setText("The door won't budge. There are Unknown symbols on the door that you can't decipher.");
+                    return null;
                 } else if (deciphered) {
                     Scene nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() - 1);
                     map.setCurrPos(currPos.getX(), currPos.getY() - 1);
                     nextScene.setInventory(this._inventory);
                     return nextScene;
                 }
-                break;
             case "SOUTH":
             case "BACKWARD":
             case "BACK":
@@ -196,9 +196,12 @@ public class EnterHouseScene implements Scene {
                 map.setCurrPos(currPos.getX() - 1, currPos.getY());
                 nextScene.setInventory(this._inventory);
                 return nextScene;
+            default:
+                this.tView.setText("Input unknown. Try something else.");
+                return null;
 
         }
-        return null;
+
     }
 
     @Override
