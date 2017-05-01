@@ -37,7 +37,7 @@ public class PikachuScene implements Scene {
             case "USE":
                 if (command.contains("CONTROL PANEL")) {
                     return "Access Unauthorized. Insert Password. Password hint is " +
-                            "2, 3, 5, 9, 17, _ What is the next number in the sequence?";
+                            "2, 3, 5, 9, 17. What is the next number in the sequence?";
                 }
                 if (command.contains("POKEBALL")) {
                     if (readTag) {
@@ -52,7 +52,7 @@ public class PikachuScene implements Scene {
                 if (command.contains("THUNDERBOLT")) {
                     if(_inventory.checkItem("Pikachu")){
                         lockDoor = false;
-                        return "Pikachu use thunderbolt at the door. The door opens.";
+                        return "Pikachu use thunderbolt at the door. The door opens to the east.";
                     } else {
                         return "None of your Pokemons knows Thunderbolt";
                     }
@@ -103,7 +103,7 @@ public class PikachuScene implements Scene {
         Scene nextScene;
         switch (direction) {
             case "BACK":
-            case "WEST":
+            case "EAST":
                 if (lockDoor) {
                     this.tView.setText("Door won’t budge. It seems to be powered by electricity.");
                 } else {
