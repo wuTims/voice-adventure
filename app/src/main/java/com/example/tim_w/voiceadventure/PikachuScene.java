@@ -21,6 +21,8 @@ public class PikachuScene implements Scene {
 
 
     public PikachuScene() {
+        this.sceneItems = new HashSet<Item>();
+
         Pikachu = new Item("pikachu","Pikachu, the electric mouse pokemon." +
                 " It can use thunderbolt by generating electricity from the two " +
                 "electric pouches on its cheeks.");
