@@ -139,6 +139,7 @@ public class EnterHouseScene implements Scene {
                         deciphered = true;
                         return "The door shatters and opens up a room to the north.";
                     }
+                    break;
             }
         }
 

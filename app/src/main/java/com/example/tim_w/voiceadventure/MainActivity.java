@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         Scene intro = new IntroScene(this.inventory);
         Scene frontHouse = new FrontHouseScene(this.inventory);
         Scene enterHouse = new EnterHouseScene();
-        Scene threePath = new ThreePathsScene();
+        Scene threePath = new ThreePathsScene(this.inventory);
         Scene articuno = new ArticunoScene();
-        Scene charmander = new CharmanderScene();
-        Scene pikachu = new PikachuScene();
+        Scene charmander = new CharmanderScene(this.inventory);
+        Scene pikachu = new PikachuScene(this.inventory);
         map.setSceneAtPosition(intro, 0, 1);
         map.setSceneAtPosition(frontHouse, 1, 1);
         map.setSceneAtPosition(enterHouse, 2, 1);
