@@ -10,9 +10,9 @@ public class ThreePathsScene implements Scene {
     private String _desc;
     private TextView tView;
     private Inventory _inventory;
+    private AdventureMap _map;
 
-    public ThreePathsScene(Inventory inventory) {
-        this._inventory = inventory;
+    public ThreePathsScene() {
         this._desc = "You find yourself in a dimly lit cave. There are three paths. To the south there is a power plant. To the west is a volcano that looks like its about to erupt. To the north is a icy mountain.";
     }
 
@@ -24,6 +24,16 @@ public class ThreePathsScene implements Scene {
 
     @Override
     public String performAction(String keyword, String command) {
+        switch(keyword){
+            case "USE":
+            case "ABRA":
+                if(command.contains("TELEPORT") && this._inventory.checkItem("abra")) {
+                    return "TELE";
+                }else{
+                    return "Input unknown. Try something else";
+                }
+        }
+
         return "Input unknown. Try something else.";
     }
 
@@ -47,6 +57,11 @@ public class ThreePathsScene implements Scene {
                 map.setCurrPos(currPos.getX() - 1, currPos.getY());
                 nextScene.setInventory(this._inventory);
                 return nextScene;
+            case "TELE":
+                nextScene = map.getSceneAtPosition(2, 1);
+                map.setCurrPos(2, 1);
+                nextScene.setInventory(this._inventory);
+                return nextScene;
             default:
                 this.tView.setText("Sorry, you can't go that way.");
                 return null;
@@ -66,5 +81,13 @@ public class ThreePathsScene implements Scene {
     @Override
     public void setInventory(Inventory inventory) {
         this._inventory = inventory;
+    }
+
+    public void setMap(AdventureMap map) {
+        this._map = map;
+    }
+
+    private AdventureMap getMap(){
+        return this._map;
     }
 }

@@ -41,6 +41,11 @@ public class EnterHouseScene implements Scene {
     public void load(TextView v) {
         v.setText(this._desc);
         if (this.tView == null) this.tView = v;
+        if (lanternOn) {
+            this._desc = "You stand in a large room with a door to the north. There is a table.";
+        } else {
+            this._desc = "It is too dark to see anything.";
+        }
     }
 
     @Override
@@ -100,20 +105,20 @@ public class EnterHouseScene implements Scene {
                         return "A list of translations for Unknown symbols.";
                     } else if (command.contains("BOOK") && this._inventory.checkItem("book") && scribbleRead) {
                         return "A precious stone, as clear as diamond.\n" +
-                                "Seek it out whilst the sun’s near the horizon.\n" +
+                                "Seek it out while the sun is near the horizon.\n" +
                                 "Though you can walk on water with its power,\n" +
-                                "Try to keep it, and it’ll vanish ere an hour.\n" +
-                                "Who am I?";
+                                "Try to keep it, and it’ll vanish in an hour.\n" +
+                                "Who am I.";
                     }
 
                 case "USE":
                 case "USED":
                     if (command.contains("BOOK") && this._inventory.checkItem("book") && scribbleRead) {
                         return "A precious stone, as clear as diamond.\n" +
-                                "Seek it out whilst the sun’s near the horizon.\n" +
+                                "Seek it out while the sun is near the horizon.\n" +
                                 "Though you can walk on water with its power,\n" +
-                                "Try to keep it, and it’ll vanish ere an hour.\n" +
-                                "Who am I?";
+                                "Try to keep it, and it’ll vanish in an hour.\n" +
+                                "Who am I.";
                     } else if (command.contains("BOOK") && this._inventory.checkItem("book") && !scribbleRead) {
                         return "This isn't the time to use that.";
                     }

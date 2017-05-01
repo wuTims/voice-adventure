@@ -2,6 +2,8 @@ package com.example.tim_w.voiceadventure;
 
 import android.widget.TextView;
 
+import java.util.HashSet;
+
 /**
  * Created by gswu on 4/26/2017.
  */
@@ -13,19 +15,26 @@ public class PikachuScene implements Scene {
     private Item Pikachu;
     private boolean readTag = false;
     private boolean lockDoor = false;
+    private boolean auth = false;
+    private boolean openBox = false;
+    private HashSet<Item> sceneItems;
 
 
     public PikachuScene() {
-        Pikachu = new Item("Pikachu","Pikachu, the electric mouse pokemon." +
+        Pikachu = new Item("pikachu","Pikachu, the electric mouse pokemon." +
                 " It can use thunderbolt by generating electricity from the two " +
                 "electric pouches on its cheeks.");
-        this._desc = "As you enter the power plant the door behind you closes trapping you in " +
-                "the room. Your Pikachu is trapped inside a glass box in front of you. There is " +
-                "a tag on its ears. There is a control panel in front of the box.";
+        this.sceneItems.add(Pikachu);
+        this._desc = "As you enter the power plant the door behind you closes and locks you in. " +
+                "Your Pikachu is trapped inside a glass box. There is " +
+                "a tag on its ears. A control panel is next to the box.";
     }
 
     @Override
     public void load(TextView v) {
+        if(!lockDoor){
+            this._desc = "You enter the power plant. There's an open glass box and a control panel next to it.";
+        }
         v.setText(this._desc);
         if (this.tView == null) this.tView = v;
     }
@@ -36,15 +45,18 @@ public class PikachuScene implements Scene {
             case "USED":
             case "USE":
                 if (command.contains("CONTROL PANEL")) {
-                    return "Access Unauthorized. Insert Password. Password hint is " +
-                            "2, 3, 5, 9, 17. What is the next number in the sequence?";
+                    if(auth){
+                        openBox = true;
+                        return "You press a switch on the panel and the glass box opens.";
+                    }else{
+                        return "Access Unauthorized. Insert Password. Password hint is " +
+                                "2, 3, 5, 9, 17. What is the next number in the sequence?";
+                    }
                 }
                 if (command.contains("POKEBALL")) {
                     if (readTag) {
-                        _inventory.addItem(Pikachu);
-                        return "Pikachu returns to its pokeball. Pikachu, the electric mouse pokemon." +
-                                " It can use thunderbolt by generating electricity from the two " +
-                                "electric pouches on its cheeks.";
+                        addItem(Pikachu);
+                        return "Pikachu returns to its pokeball. Pikachu has the ability to use THUNDERBOLT";
                     } else {
                         return "The tag looks pretty important. You might want to read it first.";
                     }
@@ -52,28 +64,43 @@ public class PikachuScene implements Scene {
                 if (command.contains("THUNDERBOLT")) {
                     if(_inventory.checkItem("Pikachu")){
                         lockDoor = false;
-                        return "Pikachu use thunderbolt at the door. The door opens to the east.";
+                        return "Pikachu used thunderbolt at the door. The door opens to the east.";
                     } else {
-                        return "None of your Pokemons knows Thunderbolt";
+                        return "None of your Pokemon know Thunderbolt";
                     }
                 }
             case "THROW":
-                if (command.contains("POKEBALL")) {
-                    if (readTag) {
-                        _inventory.addItem(Pikachu);
-                        return "Pikachu returns to its pokeball. Pikachu, the electric mouse pokemon." +
-                                " It can use thunderbolt by generating electricity from the two " +
-                                "electric pouches on its cheeks.";
-                    } else {
-                        return "The tag looks pretty important. You might want to read it first.";
+                if(sceneItems.contains(Pikachu)){
+                    if (command.contains("POKEBALL")) {
+                        if(openBox){
+                            if (readTag) {
+                                addItem(Pikachu);
+                                return "Pikachu returns to its pokeball. Pikachu has the ability to use THUNDERBOLT";
+                            } else {
+                                return "The tag looks pretty important. You might want to read it first.";
+                            }
+                        }else{
+                            return "You can't reach Pikachu. The glass box is unbreakable.";
+                        }
                     }
+                }else{
+                    return "You already have Pikachu.";
                 }
+
             case "THIRTY THREE":
             case "33":
-                return "Access Authorized. You use the control panel to open the glass box.";
+                if(lockDoor){
+                    auth = true;
+                    return "Access Authorized. You can now USE the control panel.";
+                }else{
+                    return "You already have access to the control panel.";
+                }
             case "EXAMINE":
             case "LOOK":
             case "READ":
+                if(command.contains("CONTROL PANEL")){
+                    return "A panel used to control the glass box.";
+                }
                 if (command.contains("TAG")) {
                     readTag = true;
                     return "The number 3 is written on the tag.";
@@ -83,14 +110,27 @@ public class PikachuScene implements Scene {
             case "TAKE":
             case "CAPTURE":
                 if (command.contains("PIKACHU")) {
-                    if (readTag) {
-                        _inventory.addItem(Pikachu);
-                        return "Pikachu returns to its pokeball. Pikachu, the electric mouse pokemon." +
-                                " It can use thunderbolt by generating electricity from the two " +
-                                "electric pouches on its cheeks.";
-                    } else {
-                        return "The tag looks pretty important. You might want to read it first.";
+                    if(sceneItems.contains(Pikachu)){
+                        if(openBox){
+                            if(this._inventory.checkItem("pokeballs")){
+                                if (readTag) {
+                                    addItem(Pikachu);
+                                    return "Pikachu returns to its pokeball. Pikachu has the ability to use THUNDERBOLT";
+                                } else {
+                                    return "The tag looks pretty important. You might want to read it first.";
+                                }
+                            }else{
+                                return "You don't have any pokeballs.";
+                            }
+
+                        }else{
+                            return "You can't reach Pikachu. The glass box is unbreakable.";
+                        }
+                    }else{
+                        return "You already have Pikachu.";
                     }
+
+
                 }
             default:
                 return "Input unknown. Try something else.";
@@ -114,6 +154,11 @@ public class PikachuScene implements Scene {
                 }
         }
         return null;
+    }
+
+    private void addItem(Item item) {
+        this.sceneItems.remove(item);
+        this._inventory.addItem(item);
     }
 
     @Override

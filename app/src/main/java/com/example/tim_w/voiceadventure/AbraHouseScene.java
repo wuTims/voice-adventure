@@ -40,7 +40,7 @@ public class AbraHouseScene implements Scene {
                     if(tagExamined){
                         addItem(abra);
                         this._desc = "An empty room.";
-                        return "Abra returns to its Pokeball.";
+                        return "Abra returns to its Pokeball. Abra has the ability to use TELEPORT.";
                     }else if(!tagExamined){
                         return "The tag looks important. You might want to EXAMINE it first.";
                     }
@@ -48,7 +48,7 @@ public class AbraHouseScene implements Scene {
                     return  "You don't have any pokeballs.";
                 }
                 if(command.contains("POKEDEX") && this._inventory.checkItem("abra")){
-                    return "Abra, a pyschic type Poakamawn. It can use TELEPORT to transport to different locations.";
+                    return "Abra, a pyschic type Pokemon. It can use TELEPORT to transport to different locations.";
                 }
                 if(command.contains("TELEPORT") && this._inventory.checkItem("abra") && tagExamined){
                     return "TELE";
