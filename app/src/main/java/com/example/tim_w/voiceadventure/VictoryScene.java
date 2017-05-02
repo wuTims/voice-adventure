@@ -15,8 +15,8 @@ public class VictoryScene implements Scene{
 
     public VictoryScene() {
         this._desc = "Team Rocket challenges you to a battle. You see four numbers etched on the " +
-                "front of the robot. 14-7-3-9. You remember what Professor Oak told you before " +
-                "coming here: To make a strong attack use your pokemons’ ability together.";
+                "front of the robot. 14, 7, 3, 9. You remember what Professor Oak told you before " +
+                "coming here: To make a strong attack use your pokemons' ability together.";
     }
 
     @Override
@@ -30,23 +30,23 @@ public class VictoryScene implements Scene{
         switch (keyword) {
             case "LOOK":
                 if(command.equals("")){
-                    return "You see four numbers etched on the front of the robot. 14-7-3-9.";
+                    return "Team Rocket challenges you to a battle. You see four numbers etched on the front of the robot. 14, 7, 3, 9.";
                 }
             case "USED":
             case "USE":
-                if (command.contains("TELEPORT ") && command.contains("AND") && command.contains("THUNDERBOLT")) {
+                if (command.contains("TELEPORT ") && command.contains("THUNDERBOLT")) {
                     firstCombo = true;
                     return "Abra uses teleport to teleport you to the robot’s blind spot. Pikachu uses thunderbolt " +
                             "to attack the robot. It’s a critical hit!";
-                } else if (command.contains("TELEPORT ") && command.contains("AND") && command.contains("FLAMETHROWER")) {
+                } else if (command.contains("TELEPORT ") && command.contains("FLAMETHROWER")) {
                     if (firstCombo) {
                         secondCombo = true;
                         return "Charmander uses flamethrower to set the robot on fire. It comes at you but you teleport " +
-                                "away with Abra. It’s a super effective.";
+                                "away with Abra. It’s super effective!";
                     } else {
                         return "Your attacked missed";
                     }
-                } else if (command.contains("FLAMETHOWER ") && command.contains("AND") && command.contains("BLIZZARD") && secondCombo) {
+                } else if (command.contains("FLAMETHROWER ") && command.contains("BLIZZARD") && secondCombo) {
                     if (firstCombo && secondCombo) {
                         thirdCombo = true;
                         return "Articuno and Charmander attack at the same time with flamethrower and blizzard. The sudden " +
@@ -54,7 +54,7 @@ public class VictoryScene implements Scene{
                     } else {
                         return "Your attacked missed";
                     }
-                } else if (command.contains("THUNDERBOLT")){
+                } else if (command.contains("THUNDERBOLT") ){
                     if(firstCombo && secondCombo && thirdCombo){
                         return "Pikachu uses thunderbolt to blow up the robot. You hear as Team Rocket is blown away and disappear into the clouds:" +
                                 "Team rocket is blasting off againnnn. Congratulations! You have beaten Team Rocket. Game Over.";

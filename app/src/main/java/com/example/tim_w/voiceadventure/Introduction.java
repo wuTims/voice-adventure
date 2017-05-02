@@ -11,13 +11,13 @@ public class Introduction implements Scene{
     private TextView tView;
 
     public Introduction(){
-        this._desc = "This is a voice adventure. " +
+        this._desc = "This is a voice adventure game. " +
                 "To give a command, shake the device. " +
                 "To go in a direction, say GO direction, Like GO EAST. " +
                 "To take an item in a scene, say GET or TAKE item, Like TAKE BOOK or GET BOOK. " +
                 "To use an item, say USE item, Like USE KEY. " +
-                "You may also READ or EXAMINE certain items. "+
-                "If you want to repeat the scene description, say LOOK. " +
+                "You may also READ, EXAMINE, or LOOK certain items, Like READ TAG or LOOK TAG. "+
+                "If you want to repeat the scene description, only say LOOK. " +
                 "To start the game, say START";
     }
 

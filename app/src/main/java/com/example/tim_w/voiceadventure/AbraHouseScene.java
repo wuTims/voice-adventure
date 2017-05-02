@@ -35,7 +35,6 @@ public class AbraHouseScene implements Scene {
         switch(keyword){
             case "USE":
             case "USED":
-            case "THROW":
                 if(command.contains("POKEBALLS") || command.contains("POKEBALL") && this._inventory.checkItem("pokeballs")){
                     if(tagExamined){
                         addItem(abra);
@@ -47,8 +46,8 @@ public class AbraHouseScene implements Scene {
                 } else if(command.contains("POKEBALLS") || command.contains("POKEBALL") && !this._inventory.checkItem("pokeballs")){
                     return  "You don't have any pokeballs.";
                 }
-                if(command.contains("POKEDEX") && this._inventory.checkItem("abra")){
-                    return "Abra, a pyschic type Pokemon. It can use TELEPORT to transport to different locations.";
+                if(command.contains("POKEDEX") && this._inventory.checkItem("abra") && this._inventory.checkItem("pokedex")){
+                    return "Abra, a psychic type Pokemon. It can use TELEPORT to transport to different locations.";
                 }
                 if(command.contains("TELEPORT") && this._inventory.checkItem("abra") && tagExamined){
                     return "TELE";
@@ -56,6 +55,18 @@ public class AbraHouseScene implements Scene {
                     return "The tag looks important. You might want to EXAMINE it first.";
                 }else{
                     return "Input unknown. Try something else.";
+                }
+            case "THROW":
+                if(command.contains("POKEBALLS") || command.contains("POKEBALL") && this._inventory.checkItem("pokeballs")){
+                    if(tagExamined){
+                        addItem(abra);
+                        this._desc = "An empty room.";
+                        return "Abra returns to its Pokeball. Abra has the ability to use TELEPORT.";
+                    }else if(!tagExamined){
+                        return "The tag looks important. You might want to EXAMINE it first.";
+                    }
+                } else if(command.contains("POKEBALLS") || command.contains("POKEBALL") && !this._inventory.checkItem("pokeballs")){
+                    return  "You don't have any pokeballs.";
                 }
             case "ABRA":
                 if(command.contains("TELEPORT") && this._inventory.checkItem("abra") && tagExamined){
