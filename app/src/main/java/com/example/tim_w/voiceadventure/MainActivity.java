@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         inventory = new Inventory();
 
-        map = new AdventureMap(3, 5);
+        map = new AdventureMap(3, 6);
         loadMap();
         currentScene.load(txtFromDesc);
         speakOut();
