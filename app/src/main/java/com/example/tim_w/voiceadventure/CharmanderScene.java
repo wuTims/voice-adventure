@@ -102,7 +102,7 @@ public class CharmanderScene implements Scene {
         Scene nextScene;
         switch (direction) {
             case "BACK":
-            case "SOUTH":
+            case "EAST":
                 if(_inventory.checkItem("pikachu") && _inventory.checkItem("charmander") && _inventory.checkItem("articuno")){
                     //3,1 --> 5,1
                     nextScene = map.getSceneAtPosition(currPos.getX() + 2, currPos.getY());

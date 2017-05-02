@@ -74,7 +74,7 @@ public class PikachuScene implements Scene {
                     }
                 }
                 if (command.contains("THUNDERBOLT")) {
-                    if(_inventory.checkItem("Pikachu")){
+                    if(_inventory.checkItem("pikachu")){
                         lockDoor = false;
                         return "Pikachu used thunderbolt at the door. The door opens to the east.";
                     } else {
@@ -162,7 +162,7 @@ public class PikachuScene implements Scene {
         Scene nextScene;
         switch (direction) {
             case "BACK":
-            case "EAST":
+            case "NORTH":
                 if (lockDoor) {
                     this.tView.setText("Door won’t budge. It seems to be powered by electricity.");
                 } else {
@@ -173,8 +173,8 @@ public class PikachuScene implements Scene {
                         nextScene.setInventory(this._inventory);
                         return nextScene;
                     } else {
-                        nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() + 1);
-                        map.setCurrPos(currPos.getX(), currPos.getY() + 1);
+                        nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() - 1);
+                        map.setCurrPos(currPos.getX(), currPos.getY() - 1);
                         nextScene.setInventory(this._inventory);
                         return nextScene;
                     }

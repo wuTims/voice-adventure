@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             Scene tempScene = null;
             switch(keyword){
                 case "START":
-                    this.setTTS(1.8f, 0.35f);
+                    this.setTTS(2f, 0.45f);
                     tempScene = this.currentScene.navigate("START", this.map);
                     if(tempScene != null){
                         this.currentScene = tempScene;
@@ -200,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             for(Voice v : tts.getVoices()){
                 Log.v("VOICE", v.getName());
             }
-            this.setTTS(1.2f, 0.55f);
+            this.setTTS(1.60f, 0.6f);
 
 
             speakOut();
@@ -210,8 +210,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
 
     private void setTTS(float rate, float pitch){
-        this.tts.setPitch(pitch);
-        this.tts.setSpeechRate(rate);
+        tts.setPitch(pitch);
+        tts.setSpeechRate(rate);
     }
 
     @TargetApi(21)
