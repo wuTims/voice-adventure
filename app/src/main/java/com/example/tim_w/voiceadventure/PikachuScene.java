@@ -74,7 +74,7 @@ public class PikachuScene implements Scene {
                     }
                 }
                 if (command.contains("THUNDERBOLT")) {
-                    if(_inventory.checkItem("Pikachu")){
+                    if(_inventory.checkItem("pikachu")){
                         lockDoor = false;
                         return "Pikachu used thunderbolt at the door. The door opens to the east.";
                     } else {
