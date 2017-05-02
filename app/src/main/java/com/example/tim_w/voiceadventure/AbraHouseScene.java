@@ -69,7 +69,7 @@ public class AbraHouseScene implements Scene {
             case "EXAMINE":
             case "CHECK":
             case "LOOK":
-                if(command.contains("TAG") && this._inventory.checkItem("abra")){
+                if(command.contains("TAG")){
                     tagExamined = true;
                     return "The number 5 is written on the tag.";
                 }
