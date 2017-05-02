@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         Scene charmander = new CharmanderScene();
         Scene pikachu = new PikachuScene();
         Scene abra = new AbraHouseScene();
+        Scene victory = new VictoryScene();
         map.setSceneAtPosition(Introduction, 0, 0);
         map.setSceneAtPosition(intro, 0, 1);
         map.setSceneAtPosition(frontHouse, 1, 1);
@@ -82,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         map.setSceneAtPosition(charmander, 3, 1);
         map.setSceneAtPosition(pikachu, 4, 2);
         map.setSceneAtPosition(threePath, 4, 1);
+        map.setSceneAtPosition(victory, 5, 1);
         map.setCurrPos(0,0);
-
         currentScene = Introduction;
     }
 

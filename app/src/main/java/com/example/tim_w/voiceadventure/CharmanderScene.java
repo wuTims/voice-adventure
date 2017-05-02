@@ -39,7 +39,7 @@ public class CharmanderScene implements Scene {
             case "USED":
             case "USE":
                 if (command.contains("BLIZZARD")) {
-                    if (_inventory.checkItem("Articuno")) {
+                    if (_inventory.checkItem("articuno")) {
                         return "Articuno use blizzard. With a giant flap of its wings it freezes the lava around Charmander.";
                     } else {
                         return "None of your Pokemons knows Blizzard.";
@@ -61,8 +61,9 @@ public class CharmanderScene implements Scene {
                 if (command.contains("TAG")) {
                     readTag = true;
                     return "The number 2 is written on the tag.";
-                } else {
-                    return "Input unknown. Try something else.";
+                }
+                if(command.equals("")){
+                    return this._desc;
                 }
             case "TAKE":
             case "CAPTURE":
@@ -88,10 +89,18 @@ public class CharmanderScene implements Scene {
         switch (direction) {
             case "BACK":
             case "SOUTH":
-                nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY());
-                map.setCurrPos(currPos.getX() + 1, currPos.getY());
-                nextScene.setInventory(this._inventory);
-                return nextScene;
+                if(_inventory.checkItem("pikachu") && _inventory.checkItem("charmander") && _inventory.checkItem("articuno")){
+                    //3,1 --> 5,1
+                    nextScene = map.getSceneAtPosition(currPos.getX() + 2, currPos.getY());
+                    map.setCurrPos(currPos.getX() + 2, currPos.getY());
+                    nextScene.setInventory(this._inventory);
+                    return nextScene;
+                } else {
+                    nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY());
+                    map.setCurrPos(currPos.getX() + 1, currPos.getY());
+                    nextScene.setInventory(this._inventory);
+                    return nextScene;
+                }
         }
         return null;
     }

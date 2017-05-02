@@ -63,6 +63,9 @@ public class ArticunoScene implements Scene {
                     readTag = true;
                     return "The number 1 is written on the tag.";
                 }
+                if(command.equals("")){
+                    return this._desc;
+                }
             case "TAKE":
             case "CAPTURE":
                 if (command.contains("ARTICUNO")) {
@@ -86,10 +89,17 @@ public class ArticunoScene implements Scene {
         switch (direction) {
             case "BACK":
             case "WEST":
-                nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() - 1);
-                map.setCurrPos(currPos.getX(), currPos.getY() - 1);
-                nextScene.setInventory(this._inventory);
-                return nextScene;
+                if(_inventory.checkItem("pikachu") && _inventory.checkItem("charmander") && _inventory.checkItem("articuno")) {
+                    nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY() - 1);
+                    map.setCurrPos(currPos.getX() + 1, currPos.getY() - 1);
+                    nextScene.setInventory(this._inventory);
+                    return nextScene;
+                } else {
+                    nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() - 1);
+                    map.setCurrPos(currPos.getX(), currPos.getY() - 1);
+                    nextScene.setInventory(this._inventory);
+                    return nextScene;
+                }
         }
         return null;
     }

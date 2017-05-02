@@ -106,8 +106,9 @@ public class PikachuScene implements Scene {
                 if (command.contains("TAG")) {
                     readTag = true;
                     return "The number 3 is written on the tag.";
-                } else {
-                    return "Input unknown. Try something else.";
+                }
+                if(command.equals("")){
+                    return this._desc;
                 }
             case "TAKE":
             case "CAPTURE":
@@ -149,10 +150,18 @@ public class PikachuScene implements Scene {
                 if (lockDoor) {
                     this.tView.setText("Door won’t budge. It seems to be powered by electricity.");
                 } else {
-                    nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() + 1);
-                    map.setCurrPos(currPos.getX(), currPos.getY() + 1);
-                    nextScene.setInventory(this._inventory);
-                    return nextScene;
+                    if(_inventory.checkItem("pikachu") && _inventory.checkItem("charmander") && _inventory.checkItem("articuno")){
+                        //4,2 --> 5,1
+                        nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY() - 1);
+                        map.setCurrPos(currPos.getX() + 1, currPos.getY() - 1);
+                        nextScene.setInventory(this._inventory);
+                        return nextScene;
+                    } else {
+                        nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() + 1);
+                        map.setCurrPos(currPos.getX(), currPos.getY() + 1);
+                        nextScene.setInventory(this._inventory);
+                        return nextScene;
+                    }
                 }
         }
         return null;

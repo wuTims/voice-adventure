@@ -1,5 +1,6 @@
 package com.example.tim_w.voiceadventure;
 
+import android.media.MediaPlayer;
 import android.widget.TextView;
 
 /**
@@ -18,8 +19,18 @@ public class ThreePathsScene implements Scene {
 
     @Override
     public void load(TextView v) {
-        v.setText(this._desc);
-        if(this.tView == null) this.tView = v;
+        if(_inventory.checkItem("articuno") && _inventory.checkItem("pikachu") && _inventory.checkItem("charmander")){
+            v.setText("A giant robot breaks through the roof of the cave. You hear");
+            Position currPos = _map.getCurrPos();
+            Scene nextScene = _map.getSceneAtPosition(currPos.getX() + 1, currPos.getY());
+            _map.setCurrPos(currPos.getX() + 1, currPos.getY());
+            nextScene.setInventory(this._inventory);
+
+        } else {
+            v.setText(this._desc);
+            if(this.tView == null) this.tView = v;
+        }
+
     }
 
     @Override
@@ -31,6 +42,10 @@ public class ThreePathsScene implements Scene {
                     return "TELE";
                 }else{
                     return "Input unknown. Try something else";
+                }
+            case "LOOK":
+                if(command.equals("")){
+                    return this._desc;
                 }
         }
 
