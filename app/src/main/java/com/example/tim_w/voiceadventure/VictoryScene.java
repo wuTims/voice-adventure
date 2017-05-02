@@ -30,7 +30,7 @@ public class VictoryScene implements Scene{
         switch (keyword) {
             case "LOOK":
                 if(command.equals("")){
-                    return this._desc;
+                    return "You see four numbers etched on the front of the robot. 14-7-3-9.";
                 }
             case "USED":
             case "USE":

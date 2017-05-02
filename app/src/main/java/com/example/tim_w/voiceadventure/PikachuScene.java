@@ -56,11 +56,21 @@ public class PikachuScene implements Scene {
                     }
                 }
                 if (command.contains("POKEBALL")) {
-                    if (readTag) {
-                        addItem(Pikachu);
-                        return "Pikachu returns to its pokeball. Pikachu has the ability to use THUNDERBOLT";
-                    } else {
-                        return "The tag looks pretty important. You might want to read it first.";
+                    if(sceneItems.contains(Pikachu)){
+                        if (command.contains("POKEBALL")) {
+                            if(openBox){
+                                if (readTag) {
+                                    addItem(Pikachu);
+                                    return "Pikachu returns to its pokeball. Pikachu has the ability to use THUNDERBOLT";
+                                } else {
+                                    return "The tag looks pretty important. You might want to read it first.";
+                                }
+                            }else{
+                                return "You can't reach Pikachu. The glass box is unbreakable.";
+                            }
+                        }
+                    }else{
+                        return "You already have Pikachu.";
                     }
                 }
                 if (command.contains("THUNDERBOLT")) {
@@ -98,11 +108,15 @@ public class PikachuScene implements Scene {
                     return "You already have access to the control panel.";
                 }
             case "EXAMINE":
-            case "LOOK":
             case "READ":
                 if(command.contains("CONTROL PANEL")){
                     return "A panel used to control the glass box.";
                 }
+                if (command.contains("TAG")) {
+                    readTag = true;
+                    return "The number 3 is written on the tag.";
+                }
+            case "LOOK":
                 if (command.contains("TAG")) {
                     readTag = true;
                     return "The number 3 is written on the tag.";

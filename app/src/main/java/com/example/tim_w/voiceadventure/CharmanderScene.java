@@ -40,19 +40,27 @@ public class CharmanderScene implements Scene {
             case "USE":
                 if (command.contains("BLIZZARD")) {
                     if (_inventory.checkItem("articuno")) {
+                        frozen = true;
                         return "Articuno use blizzard. With a giant flap of its wings it freezes the lava around Charmander.";
                     } else {
                         return "None of your Pokemons knows Blizzard.";
                     }
                 }
+
                 if (command.contains("POKEBALL")) {
-                    _inventory.addItem(Charmander);
-                    if (readTag) {
-                        return "Charmander returns to its pokeball. Charmander, the fire pokemon. " +
-                                "It’s tail is lit with fire. Using flamethrower from its mouth, " +
-                                "it can burn through anything";
+                    if(frozen){
+                        if (readTag && !_inventory.checkItem("charmander")) {
+                            _inventory.addItem(Charmander);
+                            return "Charmander returns to its pokeball. Charmander, the fire pokemon. " +
+                                    "It’s tail is lit with fire. Using flamethrower from its mouth, " +
+                                    "it can burn through anything";
+                        } else if(!readTag){
+                            return "The tag looks pretty important. You might want to read it first.";
+                        } else {
+                            return "You already have Charmander";
+                        }
                     } else {
-                        return "The tag looks pretty important. You might want to read it first.";
+                        return "It's too hot to do anything.";
                     }
                 }
             case "EXAMINE":
@@ -68,13 +76,19 @@ public class CharmanderScene implements Scene {
             case "TAKE":
             case "CAPTURE":
                 if (command.contains("CHARMANDER")) {
-                    _inventory.addItem(Charmander);
-                    if (readTag) {
-                        return "Charmander returns to its pokeball. Charmander, the fire pokemon. " +
-                                "It’s tail is lit with fire. Using flamethrower from its mouth, " +
-                                "it can burn through anything";
+                    if(frozen){
+                        if (readTag && !_inventory.checkItem("charmander")) {
+                            _inventory.addItem(Charmander);
+                            return "Charmander returns to its pokeball. Charmander, the fire pokemon. " +
+                                    "It’s tail is lit with fire. Using flamethrower from its mouth, " +
+                                    "it can burn through anything";
+                        } else if(!readTag){
+                            return "The tag looks pretty important. You might want to read it first.";
+                        } else {
+                            return "You already have Charmander";
+                        }
                     } else {
-                        return "The tag looks pretty important. You might want to read it first.";
+                        return "It's too hot to do anything.";
                     }
                 }
             default:
