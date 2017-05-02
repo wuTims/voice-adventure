@@ -72,22 +72,24 @@ public class PikachuScene implements Scene {
                     }
                 }
             case "THROW":
-                if(sceneItems.contains(Pikachu)){
                     if (command.contains("POKEBALL")) {
-                        if(openBox){
-                            if (readTag) {
-                                addItem(Pikachu);
-                                return "Pikachu returns to its pokeball. Pikachu has the ability to use THUNDERBOLT";
+                        if(sceneItems.contains(Pikachu)) {
+                            if (openBox) {
+                                if (readTag) {
+                                    addItem(Pikachu);
+                                    return "Pikachu returns to its pokeball. Pikachu has the ability to use THUNDERBOLT";
+                                } else {
+                                    return "The tag looks pretty important. You might want to read it first.";
+                                }
                             } else {
-                                return "The tag looks pretty important. You might want to read it first.";
+                                return "You can't reach Pikachu. The glass box is unbreakable.";
                             }
                         }else{
-                            return "You can't reach Pikachu. The glass box is unbreakable.";
+                                return "You already have Pikachu.";
                         }
+                    }else{
+                        return "Input unknown. Try something else.";
                     }
-                }else{
-                    return "You already have Pikachu.";
-                }
 
             case "THIRTY THREE":
             case "33":
@@ -132,8 +134,8 @@ public class PikachuScene implements Scene {
                     }else{
                         return "You already have Pikachu.";
                     }
-
-
+                }else{
+                    return "Input unknown. Try something else.";
                 }
             default:
                 return "Input unknown. Try something else.";
