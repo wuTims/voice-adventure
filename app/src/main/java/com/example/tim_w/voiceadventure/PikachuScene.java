@@ -14,7 +14,7 @@ public class PikachuScene implements Scene {
     private Inventory _inventory;
     private Item Pikachu;
     private boolean readTag = false;
-    private boolean lockDoor = false;
+    private boolean lockDoor = true;
     private boolean auth = false;
     private boolean openBox = false;
     private HashSet<Item> sceneItems;

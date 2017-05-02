@@ -90,14 +90,23 @@ public class AbraHouseScene implements Scene {
     public Scene navigate(String direction, AdventureMap map) {
         Position currPos = map.getCurrPos();
         switch(direction){
+            case "SOUTH":
+            case "BACK":
+                return loadNextScene(currPos.getX(), currPos.getY() + 1, map);
             case "TELE":
-                Scene nextScene = map.getSceneAtPosition(currPos.getX() + 2, currPos.getY() + 1);
-                map.setCurrPos(currPos.getX() + 2, currPos.getY() + 1);
-                nextScene.setInventory(this._inventory);
-                return nextScene;
+                return loadNextScene(currPos.getX() + 2, currPos.getY() + 1, map);
         }
 
         return null;
+    }
+
+    private Scene loadNextScene(int x, int y, AdventureMap map){
+        Position currPos = map.getCurrPos();
+        Scene nextScene = map.getSceneAtPosition(x, y);
+        map.setCurrPos(x, y);
+        nextScene.setInventory(this._inventory);
+
+        return nextScene;
     }
 
     @Override

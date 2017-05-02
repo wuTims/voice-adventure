@@ -14,7 +14,7 @@ public class Introduction implements Scene{
         this._desc = "This is a voice adventure. " +
                 "To give a command, shake the device. " +
                 "To go in a direction, say GO direction, Like GO EAST. " +
-                "To take an item in a scene, say TAKE item, Like TAKE BOOK. " +
+                "To take an item in a scene, say GET or TAKE item, Like TAKE BOOK or GET BOOK. " +
                 "To use an item, say USE item, Like USE KEY. " +
                 "You may also READ or EXAMINE certain items. "+
                 "If you want to repeat the scene description, say LOOK. " +

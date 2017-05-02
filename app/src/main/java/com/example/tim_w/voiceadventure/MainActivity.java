@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         map.setSceneAtPosition(threePath, 4, 1);
         map.setCurrPos(0,0);
 
-        threePath.setMap(map);
         currentScene = Introduction;
     }
 
@@ -216,8 +215,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     @TargetApi(21)
     private void speakOut() {
-        String exScene = "Team rocket had stolen four of your Poke e mawn. You followed them to a haunted house. The front door is locked. There is a mailbox to the right and a lantern to the left.";
-        String testScene = "Articuno, Pikachu, Charmander, Onyx";
         tts.speak(txtFromDesc.getText().toString(), TextToSpeech.QUEUE_FLUSH, null, UTTERANCE_ID);
     }
 

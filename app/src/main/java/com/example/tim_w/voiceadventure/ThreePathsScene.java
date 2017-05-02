@@ -83,11 +83,4 @@ public class ThreePathsScene implements Scene {
         this._inventory = inventory;
     }
 
-    public void setMap(AdventureMap map) {
-        this._map = map;
-    }
-
-    private AdventureMap getMap(){
-        return this._map;
-    }
 }
