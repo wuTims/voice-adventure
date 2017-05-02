@@ -34,12 +34,18 @@ public class ArticunoScene implements Scene {
                             "Always watching. Never speaking. Always lurking. Never seen. The answer is.";
                 }
                 if (command.contains("POKEBALL")) {
-                    _inventory.addItem(Articuno);
-                    if (readTag) {
-                        return "Articuno returns to its pokeball. Articuno, the legendary flying ice pokemon. " +
-                                "The flapping of its wings creates a blizzard that chills the air freezing everything";
-                    } else {
+                    if(readTag && !_inventory.checkItem("articuno")){
+                        _inventory.addItem(Articuno);
+                        if (readTag) {
+                            return "Articuno returns to its pokeball. Articuno, the legendary flying ice pokemon. " +
+                                    "The flapping of its wings creates a blizzard that chills the air freezing everything";
+                        } else {
+                            return "The tag looks pretty important. You might want to read it first.";
+                        }
+                    } else if(!readTag){
                         return "The tag looks pretty important. You might want to read it first.";
+                    } else {
+                        return "You already have Articuno";
                     }
                 }
             case "READ":
@@ -68,7 +74,7 @@ public class ArticunoScene implements Scene {
                 }
             case "TAKE":
             case "CAPTURE":
-                if (command.contains("ARTICUNO")) {
+                if(readTag && !_inventory.checkItem("articuno")){
                     _inventory.addItem(Articuno);
                     if (readTag) {
                         return "Articuno returns to its pokeball. Articuno, the legendary flying ice pokemon. " +
@@ -76,6 +82,10 @@ public class ArticunoScene implements Scene {
                     } else {
                         return "The tag looks pretty important. You might want to read it first.";
                     }
+                } else if(!readTag){
+                    return "The tag looks pretty important. You might want to read it first.";
+                } else {
+                    return "You already have Articuno";
                 }
             default:
                 return "Input unknown. Try something else.";
