@@ -14,7 +14,7 @@ public class ArticunoScene implements Scene {
     Item Articuno;
 
     public ArticunoScene() {
-        Articuno = new Item("Articuno", "Articuno, the legendary flying ice pokemon. " +
+        Articuno = new Item("articuno", "Articuno, the legendary flying ice pokemon. " +
                 "The flapping of its wings creates a blizzard that chills the air freezing everything");
         this._desc = "You climbed to the top of the icy mountain to see a door with scribbles on the door you can not decipher.";
     }
@@ -28,17 +28,17 @@ public class ArticunoScene implements Scene {
     @Override
     public String performAction(String keyword, String command) {
         switch (keyword) {
+            case "USED":
             case "USE":
                 if (command.contains("BOOK")) {
                     return "Die without me. Never thank me. Walk right through me. Never feel me." +
                             "Always watching. Never speaking. Always lurking. Never seen. The answer is.";
                 }
-                if (command.contains("POKEBALL")) {
+                if (command.contains("POKEBALL") && this._inventory.checkItem("pokeballs")) {
                     if(readTag && !_inventory.checkItem("articuno")){
                         _inventory.addItem(Articuno);
                         if (readTag) {
-                            return "Articuno returns to its pokeball. Articuno, the legendary flying ice pokemon. " +
-                                    "The flapping of its wings creates a blizzard that chills the air freezing everything";
+                            return "Articuno returns to its pokeball. Articuno has the ability to use BLIZZARD.";
                         } else {
                             return "The tag looks pretty important. You might want to read it first.";
                         }
@@ -47,6 +47,10 @@ public class ArticunoScene implements Scene {
                     } else {
                         return "You already have Articuno";
                     }
+                }
+                if(command.contains("POKEDEX") && this._inventory.checkItem("articuno") && this._inventory.checkItem("pokedex")){
+                    return "Articuno, the legendary flying ice pokemon. " +
+                            "The flapping of its wings creates a blizzard that chills the air freezing everything";
                 }
             case "READ":
                 if (command.contains("BOOK")) {
@@ -59,11 +63,16 @@ public class ArticunoScene implements Scene {
                 } else {
                     return "Input unknown. Try something else.";
                 }
+            case "OPEN":
+                if (command.equals("DOOR") && !this._inventory.checkItem("articuno")) {
+                    return "The door won't budge.";
+                }
             case "AIR":
-                if (command.equals("")) {
+                if (command.equals("") && !this._inventory.checkItem("articuno")) {
                     return "The door opens and you see Articuno sleeping. There is a tag on its wings.";
                 }
             case "EXAMINE":
+            case "CHECK":
             case "LOOK":
                 if (command.contains("TAG")) {
                     readTag = true;
@@ -72,13 +81,23 @@ public class ArticunoScene implements Scene {
                 if(command.equals("")){
                     return this._desc;
                 }
+            case "THROW":
+                if(command.contains("POKEBALLS") || command.contains("POKEBALL") && this._inventory.checkItem("pokeballs")){
+                    if(readTag){
+                        _inventory.addItem(Articuno);
+                        return "Articuno returns to its Pokeball. Articuno has the ability to use BLIZZARD.";
+                    }else if(!readTag){
+                        return "The tag looks important. You might want to EXAMINE it first.";
+                    }
+                } else if(command.contains("POKEBALLS") || command.contains("POKEBALL") && !this._inventory.checkItem("pokeballs")){
+                    return  "You don't have any pokeballs.";
+                }
             case "TAKE":
             case "CAPTURE":
                 if(readTag && !_inventory.checkItem("articuno")){
                     _inventory.addItem(Articuno);
                     if (readTag) {
-                        return "Articuno returns to its pokeball. Articuno, the legendary flying ice pokemon. " +
-                                "The flapping of its wings creates a blizzard that chills the air freezing everything";
+                        return "Articuno returns to its pokeball. Articuno has the ability to use BLIZZARD.";
                     } else {
                         return "The tag looks pretty important. You might want to read it first.";
                     }

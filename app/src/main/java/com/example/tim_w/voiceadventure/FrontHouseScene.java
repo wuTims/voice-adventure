@@ -64,7 +64,6 @@ public class FrontHouseScene implements Scene {
                 } else {
                     return "Input unknown. Try something else.";
                 }
-
             case "TAKE":
                 if(command.contains("KEY")){
                     if(this.mailboxOpen && this.sceneItems.contains(key)){
@@ -125,7 +124,6 @@ public class FrontHouseScene implements Scene {
                     String result = this.performAction("OPEN", "MAILBOX");
                     this.tView.setText(result);
                 }
-
         }
 
         return null;

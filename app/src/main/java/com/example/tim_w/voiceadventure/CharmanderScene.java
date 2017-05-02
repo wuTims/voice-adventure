@@ -15,16 +15,11 @@ public class CharmanderScene implements Scene {
     private Inventory _inventory;
 
     public CharmanderScene() {
-        Charmander = new Item("Charmander", "Charmander, the fire pokemon. " +
+        Charmander = new Item("charmander", "Charmander, the fire pokemon. " +
                 "It’s tail is lit with fire. Using flamethrower from its mouth, " +
                         "it can burn through anything");
-        if (frozen) {
-            this._desc = "You climb to the top of the volcano. You see your Charmander in the middle" +
-                    " of a frozen pit of lava. It has a tag on its tail. It’s cool enough now.";
-        } else {
-            this._desc = "You climb to the top of the volcano. You see your Charmander in the " +
-                    "middle of a pit of lava. It has a tag on its tail. It’s too hot to do anything.";
-        }
+        this._desc = "You climb to the top of the volcano. You see your Charmander in the " +
+                "middle of a pit of lava. It has a tag on its tail. It’s too hot to do anything.";
     }
 
     @Override
@@ -39,39 +34,75 @@ public class CharmanderScene implements Scene {
             case "USED":
             case "USE":
                 if (command.contains("BLIZZARD")) {
-                    if (_inventory.checkItem("articuno")) {
+                    if (_inventory.checkItem("articuno") && !frozen) {
                         frozen = true;
+                        this._desc = "You climb to the top of the volcano. You see your Charmander in the middle" +
+                                " of a frozen pit of lava. It has a tag on its tail. It’s cool enough now.";
                         return "Articuno use blizzard. With a giant flap of its wings it freezes the lava around Charmander.";
                     } else {
                         return "None of your Pokemons knows Blizzard.";
                     }
                 }
-
                 if (command.contains("POKEBALL")) {
                     if(frozen){
                         if (readTag && !_inventory.checkItem("charmander")) {
                             _inventory.addItem(Charmander);
-                            return "Charmander returns to its pokeball. Charmander, the fire pokemon. " +
-                                    "It’s tail is lit with fire. Using flamethrower from its mouth, " +
-                                    "it can burn through anything";
+                            this._desc = "You are on top of a volcano. There is a frozen pit of lava.";
+                            return "Charmander returns to its pokeball. Charmander has the ability to use FLAMETHROWER.";
                         } else if(!readTag){
                             return "The tag looks pretty important. You might want to read it first.";
                         } else {
                             return "You already have Charmander";
                         }
+                    } else if (!frozen) {
+                        return "It's too hot.";
                     } else {
-                        return "It's too hot to do anything.";
+                        return "You already have Charmander";
                     }
                 }
+                if(command.contains("POKEDEX") && this._inventory.checkItem("charmander") && this._inventory.checkItem("pokedex")){
+                    return "Charmander, the fire pokemon. " +
+                            "It’s tail is lit with fire. Using flamethrower from its mouth, " +
+                            "it can burn through anything";
+                }
+            case "THROW":
+                if (command.contains("POKEBALL")) {
+                    if(frozen){
+                        if (readTag && !_inventory.checkItem("charmander")) {
+                            _inventory.addItem(Charmander);
+                            this._desc = "You are on top of a volcano. There is a frozen pit of lava.";
+                            return "Charmander returns to its pokeball. Charmander has the ability to use FLAMETHROWER.";
+                        } else if(!readTag){
+                            return "The tag looks pretty important. You might want to read it first.";
+                        } else {
+                            return "You already have Charmander";
+                        }
+                    } else if (!frozen) {
+                        return "It's too hot.";
+                    } else {
+                        return "You already have Charmander";
+                    }
+                }
+            case "ARTICUNO":
+                if(command.contains("BLIZZARD") && this._inventory.checkItem("articuno") && !frozen){
+                    frozen = true;
+                    this._desc = "You climb to the top of the volcano. You see your Charmander in the middle" +
+                            " of a frozen pit of lava. It has a tag on its tail. It’s cool enough now.";
+                    return "Articuno use blizzard. With a giant flap of its wings it freezes the lava around Charmander.";
+                }
             case "EXAMINE":
-            case "LOOK":
+            case "CHECK":
             case "READ":
                 if (command.contains("TAG")) {
                     readTag = true;
                     return "The number 2 is written on the tag.";
                 }
+            case "LOOK":
                 if(command.equals("")){
                     return this._desc;
+                } else if (command.contains("TAG")) {
+                    readTag = true;
+                    return "The number 2 is written on the tag.";
                 }
             case "TAKE":
             case "CAPTURE":
@@ -79,16 +110,17 @@ public class CharmanderScene implements Scene {
                     if(frozen){
                         if (readTag && !_inventory.checkItem("charmander")) {
                             _inventory.addItem(Charmander);
-                            return "Charmander returns to its pokeball. Charmander, the fire pokemon. " +
-                                    "It’s tail is lit with fire. Using flamethrower from its mouth, " +
-                                    "it can burn through anything";
+                            this._desc = "You are on top of a volcano. There is a frozen pit of lava.";
+                            return "Charmander returns to its pokeball. Charmander has the ability to use FLAMETHROWER.";
                         } else if(!readTag){
                             return "The tag looks pretty important. You might want to read it first.";
                         } else {
                             return "You already have Charmander";
                         }
+                    } else if (!frozen) {
+                        return "It's too hot.";
                     } else {
-                        return "It's too hot to do anything.";
+                        return "You already have Charmander";
                     }
                 }
             default:
