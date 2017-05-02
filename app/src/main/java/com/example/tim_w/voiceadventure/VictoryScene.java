@@ -55,9 +55,13 @@ public class VictoryScene implements Scene{
                         return "Your attacked missed";
                     }
                 } else if (command.contains("THUNDERBOLT")){
+                    if(firstCombo && secondCombo && thirdCombo){
                         return "Pikachu uses thunderbolt to blow up the robot. You hear as Team Rocket is blown away and disappear into the clouds:" +
-                                "Team rocket is blasting off againnnn ****** Congratulations! You have beaten Team Rocket. Game Over.";
-                 }else {
+                                "Team rocket is blasting off againnnn. Congratulations! You have beaten Team Rocket. Game Over.";
+                    } else {
+                        return "You remember what Professor Oak told you before coming here: “use your pokemon’s abilities in a combination with another pokemon to make a stronger attack.";
+                    }
+                 } else {
                     return "Remember what Professor Oak told you before coming here: To make a strong attack use your pokemons’ ability together.";
                 }
             default:
