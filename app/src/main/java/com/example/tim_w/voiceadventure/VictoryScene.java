@@ -15,7 +15,7 @@ public class VictoryScene implements Scene{
 
     public VictoryScene() {
         this._desc = "Team Rocket challenges you to a battle. You see four numbers etched on the " +
-                "front of the robot. 14, 7, 3, 9. You remember what Professor Oak told you before " +
+                "front of the robot. 8-7-4-3. You remember what Professor Oak told you before " +
                 "coming here: To make a strong attack use your pokemons' ability together.";
     }
 
@@ -30,7 +30,7 @@ public class VictoryScene implements Scene{
         switch (keyword) {
             case "LOOK":
                 if(command.equals("")){
-                    return "Team Rocket challenges you to a battle. You see four numbers etched on the front of the robot. 14, 7, 3, 9.";
+                    return "Team Rocket challenges you to a battle. You see four numbers etched on the front of the robot. 8-7-4-3.";
                 }
             case "USED":
             case "USE":

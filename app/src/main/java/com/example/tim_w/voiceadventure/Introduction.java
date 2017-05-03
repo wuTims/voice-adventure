@@ -18,7 +18,7 @@ public class Introduction implements Scene{
                 "To use an item, say USE item, Like USE KEY. " +
                 "You may also READ, EXAMINE, or LOOK certain items, Like READ TAG or LOOK TAG. "+
                 "If you want to repeat the scene description, only say LOOK. " +
-                "To start the game, say START";
+                "To start the game, shake the device and say START";
     }
 
     @Override
