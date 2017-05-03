@@ -36,7 +36,7 @@ public class PikachuScene implements Scene {
     @Override
     public void load(TextView v) {
         if(!lockDoor){
-            this._desc = "You enter the power plant. There's an open glass box and a control panel next to it.";
+            this._desc = "You enter the power plant. Theres an open glass box and a control panel next to it.";
         }
         v.setText(this._desc);
         if (this.tView == null) this.tView = v;
@@ -52,19 +52,19 @@ public class PikachuScene implements Scene {
                     if(auth) {
                         if (!openBox && sceneItems.contains(Pikachu)) {
                             openBox = true;
-                            this._desc = "There's an open glass box with pikachu inside and a control panel next to it.";
+                            this._desc = "Theres an open glass box with pikachu inside and a control panel next to it.";
                             return "You press a switch on the panel and the glass box opens.";
                         } else if (openBox && sceneItems.contains(Pikachu)) {
                             openBox = false;
-                            this._desc = "There's a closed glass box with pikachu inside and a control panel next to it.";
+                            this._desc = "Theres a closed glass box with pikachu inside and a control panel next to it.";
                             return "You press a switch on the panel and the glass box closes.";
                         } else  if (!openBox && !sceneItems.contains(Pikachu)) {
                             openBox = true;
-                            this._desc = "There's an open glass box and a control panel next to it.";
+                            this._desc = "Theres an open glass box and a control panel next to it.";
                             return "You press a switch on the panel and the glass box opens.";
                         } else if (openBox && !sceneItems.contains(Pikachu)) {
                             openBox = false;
-                            this._desc = "There's a closed glass box and a control panel next to it.";
+                            this._desc = "Theres a closed glass box and a control panel next to it.";
                             return "You press a switch on the panel and the glass box closes.";
                         }
 
@@ -93,13 +93,13 @@ public class PikachuScene implements Scene {
                             if(openBox){
                                 if (readTag) {
                                     addItem(Pikachu);
-                                    this._desc = "There's an open glass box and a control panel next to it.";
+                                    this._desc = "Theres an open glass box and a control panel next to it.";
                                     return "Pikachu returns to its pokeball. Pikachu has the ability to use THUNDERBOLT";
                                 } else {
                                     return "The tag looks pretty important. You might want to read it first.";
                                 }
                             }else{
-                                return "You can't reach Pikachu. The glass box is unbreakable.";
+                                return "You cant reach Pikachu. The glass box is unbreakable.";
                             }
                         }
                     }else{
@@ -109,7 +109,7 @@ public class PikachuScene implements Scene {
                 if (command.contains("THUNDERBOLT")) {
                     if(_inventory.checkItem("pikachu")){
                         lockDoor = false;
-                        return "Pikachu used thunderbolt at the door. The door opens to the east.";
+                        return "Pikachu used thunderbolt at the door. The door opens to the north.";
                     } else {
                         return "None of your Pokemon know Thunderbolt";
                     }
@@ -125,13 +125,13 @@ public class PikachuScene implements Scene {
                             if (openBox) {
                                 if (readTag) {
                                     addItem(Pikachu);
-                                    this._desc = "There's an open glass box and a control panel next to it.";
+                                    this._desc = "Theres an open glass box and a control panel next to it.";
                                     return "Pikachu returns to its pokeball. Pikachu has the ability to use THUNDERBOLT";
                                 } else {
                                     return "The tag looks pretty important. You might want to read it first.";
                                 }
                             } else {
-                                return "You can't reach Pikachu. The glass box is unbreakable.";
+                                return "You cant reach Pikachu. The glass box is unbreakable.";
                             }
                         }else{
                                 return "You already have Pikachu.";
@@ -149,6 +149,7 @@ public class PikachuScene implements Scene {
                     return "You already have access to the control panel.";
                 }
             case "EXAMINE":
+            case "CHECK":
             case "READ":
                 if(command.contains("CONTROL PANEL")){
                     return "A panel used to control the glass box.";
@@ -180,11 +181,11 @@ public class PikachuScene implements Scene {
                                     return "The tag looks pretty important. You might want to read it first.";
                                 }
                             }else{
-                                return "You don't have any pokeballs.";
+                                return "You dont have any pokeballs.";
                             }
 
                         }else{
-                            return "You can't reach Pikachu. The glass box is unbreakable.";
+                            return "You cant reach Pikachu. The glass box is unbreakable.";
                         }
                     }else{
                         return "You already have Pikachu.";
@@ -221,7 +222,7 @@ public class PikachuScene implements Scene {
             case "BACK":
             case "NORTH":
                 if (lockDoor) {
-                    this.tView.setText("Door won’t budge. It seems to be powered by electricity.");
+                    this.tView.setText("Door wont budge. It seems to be powered by electricity.");
                 } else {
                     if(_inventory.checkItem("pikachu") && _inventory.checkItem("charmander") && _inventory.checkItem("articuno")){
                         //4,2 --> 5,1

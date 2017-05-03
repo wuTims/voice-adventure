@@ -62,6 +62,7 @@ public class ThreePathsScene implements Scene {
                 map.setCurrPos(currPos.getX(), currPos.getY() - 1);
                 nextScene.setInventory(this._inventory);
                 return nextScene;
+            case "OUT":
             case "SOUTH": //electric
                 nextScene = map.getSceneAtPosition(currPos.getX(), currPos.getY() + 1);
                 map.setCurrPos(currPos.getX(), currPos.getY() + 1);

@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     }
                     break;
                 case "GO":
+                case "GOES":
                 case "NAVIGATE":
                     tempScene = this.currentScene.navigate(command, this.map);
                     if(tempScene != null){
