@@ -31,7 +31,7 @@ public class ArticunoScene implements Scene {
             case "USED":
             case "USE":
                 if (command.contains("BOOK")) {
-                    return "Die without me. Never thank me. Walk right through me. Never feel me." +
+                    return "Die without me. Never thank me. Walk right through me. Never feel me. " +
                             "Always watching. Never speaking. Always lurking. Never seen. The answer is.";
                 }
                 if (command.contains("POKEBALL") && this._inventory.checkItem("pokeballs")) {
