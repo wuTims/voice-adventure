@@ -137,15 +137,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                         this.currentScene.load(txtFromDesc);
                     }
                     break;
-                case "OPEN":
-                case "ENTER":
-                case "UNLOCK":
-                    tempScene = this.currentScene.navigate(keyword, command, this.map);
-                    if(tempScene != null){
-                        this.currentScene = tempScene;
-                        this.currentScene.load(txtFromDesc);
-                    }
-                    break;
+
                 default:
                     output = this.currentScene.performAction(keyword, command);
                     if(output.equalsIgnoreCase("TELE")){

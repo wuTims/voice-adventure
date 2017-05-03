@@ -46,8 +46,19 @@ public class AbraHouseScene implements Scene {
                 } else if(command.contains("POKEBALLS") || command.contains("POKEBALL") && !this._inventory.checkItem("pokeballs")){
                     return  "You don't have any pokeballs.";
                 }
-                if(command.contains("POKEDEX") && this._inventory.checkItem("abra") && this._inventory.checkItem("pokedex")){
-                    return "Abra, a psychic type Pokemon. It can use TELEPORT to transport to different locations.";
+                if(command.contains("POKEDEX") && this._inventory.checkItem("pokedex")){
+                    if(command.contains("PIKACHU")) {
+                        return "Pikachu, the electric mouse pokemon. " +
+                                "Pikachu has the ability to use THUNDERBOLT.";
+                    }else if(command.contains("ABRA")) {
+                        return "Abra, a psychic type Pokemon. It can use TELEPORT to transport to different locations.";
+                    }else if(command.contains("ARTICUNO")) {
+                        return "Articuno, the legendary flying ice Pokemon. Articuno has the ability to use BLIZZARD.";
+                    }else if(command.contains("CHARMANDER")){
+                        return "Charmander, the fire lizard Pokemon. Charmander has the ability to use FLAMETHROWER.";
+                    }else{
+                        return "Please specify a Pokemon to look up in the Pokedex.";
+                    }
                 }
                 if(command.contains("TELEPORT") && this._inventory.checkItem("abra") && tagExamined){
                     return "TELE";
@@ -68,6 +79,29 @@ public class AbraHouseScene implements Scene {
                 } else if(command.contains("POKEBALLS") || command.contains("POKEBALL") && !this._inventory.checkItem("pokeballs")){
                     return  "You don't have any pokeballs.";
                 }
+            case "TAKE":
+            case "CAPTURE":
+            case "GET":
+                if (command.contains("ABRA")) {
+                    if(sceneItems.contains(abra)){
+                            if(this._inventory.checkItem("pokeballs")){
+                                if(tagExamined){
+                                    addItem(abra);
+                                    this._desc = "An empty room.";
+                                    return "Abra returns to its Pokeball. Abra has the ability to use TELEPORT.";
+                                }else if(!tagExamined){
+                                    return "The tag looks important. You might want to EXAMINE it first.";
+                                }
+                            }else{
+                                return "You don't have any pokeballs.";
+                            }
+
+                    }else{
+                        return "You already have Abra.";
+                    }
+                }else{
+                    return "Input unknown. Try something else.";
+                }
             case "ABRA":
                 if(command.contains("TELEPORT") && this._inventory.checkItem("abra") && tagExamined){
                     return "TELE";
@@ -87,6 +121,22 @@ public class AbraHouseScene implements Scene {
                 if(command.equals("")){
                     return this._desc;
                 }
+
+            case "HELP":
+                String helpString = "";
+                if(this._inventory.checkItem("abra")){
+                    helpString += "Abra can USE TELEPORT to transport you.\n\n";
+                }
+                if(this._inventory.checkItem("pokeballs")){
+                    helpString += "Try to CAPTURE ABRA.\n\n";
+                }
+                if(!this._inventory.checkItem("pokeballs")){
+                    helpString += "You might have forgotten POKEBALLS on the table.\n\n";
+                }
+
+                helpString += "The TAG looks important to EXAMINE.";
+
+                return helpString;
             default:
                 return "Input unknown. Try something else.";
         }

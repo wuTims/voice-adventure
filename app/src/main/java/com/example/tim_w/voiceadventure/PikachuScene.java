@@ -17,6 +17,7 @@ public class PikachuScene implements Scene {
     private boolean lockDoor = true;
     private boolean auth = false;
     private boolean openBox = false;
+    private boolean tryControl = false;
     private HashSet<Item> sceneItems;
 
 
@@ -47,6 +48,7 @@ public class PikachuScene implements Scene {
             case "USED":
             case "USE":
                 if (command.contains("CONTROL PANEL")) {
+                    tryControl = true;
                     if(auth) {
                         if (!openBox && sceneItems.contains(Pikachu)) {
                             openBox = true;
@@ -71,10 +73,19 @@ public class PikachuScene implements Scene {
                                 "2, 3, 5, 9, 17. What is the next number in the sequence?";
                         }
                     }
-                if(command.contains("POKEDEX") && this._inventory.checkItem("pikachu") && this._inventory.checkItem("pokedex")){
-                    return "Pikachu, the electric mouse pokemon." +
-                            " It can use thunderbolt by generating electricity from the two " +
-                            "electric pouches on its cheeks.";
+                if(command.contains("POKEDEX") && this._inventory.checkItem("pokedex")){
+                    if(command.contains("PIKACHU")) {
+                        return "Pikachu, the electric mouse pokemon. " +
+                                "Pikachu has the ability to use THUNDERBOLT.";
+                    }else if(command.contains("ABRA")) {
+                        return "Abra, a psychic type Pokemon. It can use TELEPORT to transport to different locations.";
+                    }else if(command.contains("ARTICUNO")) {
+                        return "Articuno, the legendary flying ice Pokemon. Articuno has the ability to use BLIZZARD.";
+                    }else if(command.contains("CHARMANDER")){
+                        return "Charmander, the fire lizard Pokemon. Charmander has the ability to use FLAMETHROWER.";
+                    }else{
+                        return "Please specify a Pokemon to look up in the Pokedex.";
+                    }
                 }
                 if (command.contains("POKEBALL")) {
                     if(sceneItems.contains(Pikachu)){
@@ -156,6 +167,7 @@ public class PikachuScene implements Scene {
                 }
             case "TAKE":
             case "CAPTURE":
+            case "GET":
                 if (command.contains("PIKACHU")) {
                     if(sceneItems.contains(Pikachu)){
                         if(openBox){
@@ -180,6 +192,22 @@ public class PikachuScene implements Scene {
                 }else{
                     return "Input unknown. Try something else.";
                 }
+            case "HELP":
+                String helpString = "";
+                if(lockDoor && this._inventory.checkItem("pikachu")){
+                    helpString += "Try to USE THUNDERBOLT.\n\n";
+                }
+                if(auth && !this._inventory.checkItem("pikachu")){
+                    helpString += "Try to CAPTURE PIKACHU.\n\n";
+                }
+                if(!auth && tryControl){
+                    helpString += "First try doubling the previous number in the sequence.\n\n";
+                }
+                if(!tryControl){
+                    helpString += "The CONTROL PANEL looks important. Try to USE it.\n\n";
+                }
+
+                return helpString;
             default:
                 return "Input unknown. Try something else.";
         }

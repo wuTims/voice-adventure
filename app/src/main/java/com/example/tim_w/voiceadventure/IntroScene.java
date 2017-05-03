@@ -16,7 +16,7 @@ public class IntroScene implements Scene {
 
     public IntroScene(Inventory inventory){
         this._inventory = inventory;
-        this._desc = "Team Rocket stole four of your Pokon. You see them run down a path to the east.";
+        this._desc = "Team Rocket stole four of your Pokemon. You see them run down a path to the east.";
     }
 
     @Override
@@ -33,6 +33,9 @@ public class IntroScene implements Scene {
                     return this._desc;
                 }
                 break;
+
+            case "HELP":
+                return "Try to navigate EAST.";
         }
 
 

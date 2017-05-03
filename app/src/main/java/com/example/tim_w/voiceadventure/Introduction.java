@@ -11,14 +11,14 @@ public class Introduction implements Scene{
     private TextView tView;
 
     public Introduction(){
-        this._desc = "This is a voice adventure game. " +
-                "To give a command, shake the device. " +
-                "To go in a direction, say GO direction, Like GO EAST. " +
-                "To take an item in a scene, say GET or TAKE item, Like TAKE BOOK or GET BOOK. " +
-                "To use an item, say USE item, Like USE KEY. " +
-                "You may also READ, EXAMINE, or LOOK certain items, Like READ TAG or LOOK TAG. "+
-                "If you want to repeat the scene description, only say LOOK. " +
-                "To start the game, shake the device and say START";
+        this._desc = "This is a voice adventure game. These are the main commands. There may be others that you can try.\n\n" +
+                "GO: for NAVIGATION, like GO EAST.\n" +
+                "TAKE or GET: for ITEMS, like TAKE BOOK or GET KEY.\n" +
+                "USE: for ITEMS or MOVES, like USE LANTERN.\n"+
+                "EXAMINE, LOOK, READ, or CHECK: for ITEMS, like EXAMINE TABLE or CHECK MAILBOX.\n" +
+                "LOOK: for SCENES, only say LOOK to repeat the scene.\n" +
+                "HELP: for HINTS, only use HELP if you are stuck.\n\n"+
+                "Say START to begin.";
     }
 
     @Override

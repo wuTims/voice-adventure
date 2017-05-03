@@ -60,10 +60,19 @@ public class CharmanderScene implements Scene {
                         return "You already have Charmander";
                     }
                 }
-                if(command.contains("POKEDEX") && this._inventory.checkItem("charmander") && this._inventory.checkItem("pokedex")){
-                    return "Charmander, the fire pokemon. " +
-                            "It’s tail is lit with fire. Using flamethrower from its mouth, " +
-                            "it can burn through anything";
+                if(command.contains("POKEDEX") && this._inventory.checkItem("pokedex")){
+                    if(command.contains("PIKACHU")) {
+                        return "Pikachu, the electric mouse pokemon. " +
+                                "Pikachu has the ability to use THUNDERBOLT.";
+                    }else if(command.contains("ABRA")) {
+                        return "Abra, a psychic type Pokemon. It can use TELEPORT to transport to different locations.";
+                    }else if(command.contains("ARTICUNO")) {
+                        return "Articuno, the legendary flying ice Pokemon. Articuno has the ability to use BLIZZARD.";
+                    }else if(command.contains("CHARMANDER")){
+                        return "Charmander, the fire lizard Pokemon. Charmander has the ability to use FLAMETHROWER.";
+                    }else{
+                        return "Please specify a Pokemon to look up in the Pokedex.";
+                    }
                 }
             case "THROW":
                 if (command.contains("POKEBALL")) {
@@ -123,6 +132,19 @@ public class CharmanderScene implements Scene {
                         return "You already have Charmander";
                     }
                 }
+            case "HELP":
+                String helpString = "";
+                if(frozen){
+                    helpString += "Try to CAPTURE CHARMANDER.\n\n";
+                }
+                if(!frozen && this._inventory.checkItem("articuno")){
+                    helpString += "Try to freeze the lava with BLIZZARD.\n\n";
+                }
+                if(!this._inventory.checkItem("articuno")){
+                    helpString += "You might need a Pokemon that can FREEZE the lava.\n\n";
+                }
+
+                return helpString;
             default:
                 return "Input unknown. Try something else.";
         }

@@ -11,6 +11,8 @@ public class ArticunoScene implements Scene {
     private String _desc;
     private TextView tView;
     private boolean readTag = false;
+    private boolean usedBook = false;
+    private boolean solved = false;
     Item Articuno;
 
     public ArticunoScene() {
@@ -31,6 +33,7 @@ public class ArticunoScene implements Scene {
             case "USED":
             case "USE":
                 if (command.contains("BOOK")) {
+                    usedBook = true;
                     return "Die without me. Never thank me. Walk right through me. Never feel me." +
                             "Always watching. Never speaking. Always lurking. Never seen. The answer is.";
                 }
@@ -48,12 +51,23 @@ public class ArticunoScene implements Scene {
                         return "You already have Articuno";
                     }
                 }
-                if(command.contains("POKEDEX") && this._inventory.checkItem("articuno") && this._inventory.checkItem("pokedex")){
-                    return "Articuno, the legendary flying ice pokemon. " +
-                            "The flapping of its wings creates a blizzard that chills the air freezing everything";
+                if(command.contains("POKEDEX") && this._inventory.checkItem("pokedex")){
+                    if(command.contains("PIKACHU")) {
+                        return "Pikachu, the electric mouse pokemon. " +
+                                "Pikachu has the ability to use THUNDERBOLT.";
+                    }else if(command.contains("ABRA")) {
+                        return "Abra, a psychic type Pokemon. It can use TELEPORT to transport to different locations.";
+                    }else if(command.contains("ARTICUNO")) {
+                        return "Articuno, the legendary flying ice Pokemon. Articuno has the ability to use BLIZZARD.";
+                    }else if(command.contains("CHARMANDER")){
+                        return "Charmander, the fire lizard Pokemon. Charmander has the ability to use FLAMETHROWER.";
+                    }else{
+                        return "Please specify a Pokemon to look up in the Pokedex.";
+                    }
                 }
             case "READ":
                 if (command.contains("BOOK")) {
+                    usedBook = true;
                     return "Die without me. Never thank me. Walk right through me. Never feel me." +
                             "Always watching. Never speaking. Always lurking. Never seen. The answer is.";
                 }
@@ -69,6 +83,7 @@ public class ArticunoScene implements Scene {
                 }
             case "AIR":
                 if (command.equals("") && !this._inventory.checkItem("articuno")) {
+                    solved = true;
                     return "The door opens and you see Articuno sleeping. There is a tag on its wings.";
                 }
             case "EXAMINE":
@@ -106,6 +121,17 @@ public class ArticunoScene implements Scene {
                 } else {
                     return "You already have Articuno";
                 }
+            case "HELP":
+                String helpString = "";
+                if(usedBook && solved){
+                    helpString += "Try to CAPTURE ARTICUNO.\n\n";
+                }
+                if(usedBook && !solved){
+                    helpString += "Think of something that's all around us.\n\n";
+                }
+                helpString += "Maybe try to USE the BOOK to decipher the text.\n\n";
+
+                return helpString;
             default:
                 return "Input unknown. Try something else.";
         }

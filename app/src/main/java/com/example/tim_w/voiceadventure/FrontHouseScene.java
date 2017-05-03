@@ -16,6 +16,7 @@ public class FrontHouseScene implements Scene {
     private boolean mailboxOpen = false;
     private Item lantern, key, pokedex;
     private TextView tView;
+    private boolean doorUnlock = false;
 
     public FrontHouseScene(Inventory inventory) {
         this._inventory = inventory;
@@ -46,8 +47,28 @@ public class FrontHouseScene implements Scene {
             case "OPEN":
             case "CHECK":
             case "LOOK":
+            case "EXAMINE":
+            case "ENTER":
                 if(command.equals("")){
                     return this._desc;
+                }
+                if(command.contains("DOOR") && (keyword.equalsIgnoreCase("OPEN") || keyword.equalsIgnoreCase("ENTER"))){
+                    if(!doorUnlock){
+                        if(this._inventory.checkItem("key")){
+                            this._inventory.removeItem(key);
+                            this.doorUnlock = true;
+                            if(this._inventory.checkItem("lantern")){
+                                this._desc = "You stand before a dark, broken down house. The front door is open to the east. There is a mailbox.";
+                            }else{
+                                this._desc = "You stand before a dark, broken down house. The front door is open to the east. There is a mailbox and a lantern on the ground.";
+                            }
+                            return "The key jams in the door and opens up to the east.";
+                        }else{
+                            return "The door is locked.";
+                        }
+                    }else{
+                        return "The door is open.";
+                    }
                 }
                 if(command.contains("MAILBOX")){
                     this.mailboxOpen = true;
@@ -65,6 +86,7 @@ public class FrontHouseScene implements Scene {
                     return "Input unknown. Try something else.";
                 }
             case "TAKE":
+            case "GET":
                 if(command.contains("KEY")){
                     if(this.mailboxOpen && this.sceneItems.contains(key)){
                         addItem(key);
@@ -89,6 +111,40 @@ public class FrontHouseScene implements Scene {
                 } else {
                     return "Input unknown. Try something else.";
                 }
+            case "USE":
+            case "USED":
+                if(command.contains("LANTERN")){
+                    return "Now is not the time or place to do this.";
+                }else if(command.contains("KEY")){
+                    return "Try UNLOCKING the DOOR.";
+                }
+            case "HELP":
+                String helpString = "";
+                if(this._inventory.checkItem("key") && this._inventory.checkItem("lantern")){
+                    helpString += "Try to UNLOCK the DOOR.\n\n";
+                }
+                if(this.mailboxOpen && this.sceneItems.contains(key)){
+                    helpString += "Try to GET the KEY.\n\n";
+                }
+                if(this.sceneItems.contains(lantern)){
+                    helpString += "The lantern looks important. Maybe TAKE it.\n\n";
+                }
+                helpString += "Look for something to UNLOCK the DOOR. Try CHECKING the MAILBOX.\n\n";
+
+                return helpString;
+            case "UNLOCK":
+                if(command.contains("DOOR")){
+                    if(this._inventory.checkItem("key")){
+                        this._inventory.removeItem(key);
+                        this.doorUnlock = true;
+                        if(this._inventory.checkItem("lantern")){
+                            this._desc = "You stand before a dark, broken down house. The front door is open to the east. There is a mailbox.";
+                        }else{
+                            this._desc = "You stand before a dark, broken down house. The front door is open to the east. There is a mailbox and a lantern on the ground.";
+                        }
+                        return "The key jams in the door and opens up to the east.";
+                    }
+                }
             default:
                 return "Input unknown. Try something else.";
         }
@@ -96,34 +152,38 @@ public class FrontHouseScene implements Scene {
 
     @Override
     public Scene navigate(String direction, AdventureMap map) {
+        Position currPos = map.getCurrPos();
+        switch (direction) {
+            case "EAST":
+                if(this.doorUnlock){
+                    Scene nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY());
+                    map.setCurrPos(currPos.getX() + 1, currPos.getY());
+                    nextScene.setInventory(this._inventory);
+                    if(this._inventory.checkItem("lantern")){
+                        this._desc = "You stand before a dark, broken down house. The front door is open to the east. There is a mailbox.";
+                    }else{
+                        this._desc = "You stand before a dark, broken down house. The front door is open to the east. There is a mailbox and a lantern on the ground.";
+                    }
+                    return nextScene;
+                } else {
+                    this.tView.setText("The door is locked.");
+                }
+        }
+
+
         return null;
     }
 
     @Override
     public Scene navigate(String keyword, String object, AdventureMap map) {
-        Position currPos = map.getCurrPos();
         switch (keyword) {
             case "OPEN":
             case "ENTER":
-            case "UNLOCK":
-                if(object.contains("DOOR") || object.contains("HOUSE")){
-                    if(this._inventory.checkItem("key")){
-                        Scene nextScene = map.getSceneAtPosition(currPos.getX() + 1, currPos.getY());
-                        map.setCurrPos(currPos.getX() + 1, currPos.getY());
-                        nextScene.setInventory(this._inventory);
-                        if(this._inventory.checkItem("lantern")){
-                            this._desc = "You stand before a dark, broken down house. The front door is open. There is a mailbox.";
-                        }else{
-                            this._desc = "You stand before a dark, broken down house. The front door is open. There is a mailbox and a lantern on the ground.";
-                        }
-                        return nextScene;
-                    } else {
-                        this.tView.setText("The door is locked.");
-                    }
-                }else if(object.contains("MAILBOX")){
+                if(object.contains("MAILBOX")){
                     String result = this.performAction("OPEN", "MAILBOX");
                     this.tView.setText(result);
                 }
+
         }
 
         return null;
