@@ -82,6 +82,7 @@ public class AbraHouseScene implements Scene {
             case "TAKE":
             case "CAPTURE":
             case "GET":
+            case "CATCH":
                 if (command.contains("ABRA")) {
                     if(sceneItems.contains(abra)){
                             if(this._inventory.checkItem("pokeballs")){

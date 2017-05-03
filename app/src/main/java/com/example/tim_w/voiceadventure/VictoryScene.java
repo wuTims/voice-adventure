@@ -15,7 +15,7 @@ public class VictoryScene implements Scene{
 
     public VictoryScene() {
         this._desc = "As you go back to the cave, Team Rocket challenges you to a battle. You see four numbers etched on the " +
-                "front of the robot. 8-7-4-3. You remember what Professor Oak told you before " +
+                "front of the robot. 8, 7, 11, 3. You remember what Professor Oak told you before " +
                 "coming here: To make a strong attack use your pokemons ability together.";
     }
 
@@ -30,15 +30,15 @@ public class VictoryScene implements Scene{
         switch (keyword) {
             case "LOOK":
                 if(command.equals("")){
-                    return "Team Rocket challenges you to a battle. You see four numbers etched on the front of the robot. 8-7-4-3.";
+                    return "Team Rocket challenges you to a battle. You see four numbers etched on the front of the robot. 8, 7, 11, 3.";
                 }
             case "USED":
             case "USE":
-                if (command.contains("TELEPORT ") && command.contains("THUNDERBOLT")) {
+                if (command.contains("TELEPORT") && command.contains("THUNDERBOLT")) {
                     firstCombo = true;
                     return "Abra uses teleport to teleport you to the robots blind spot. Pikachu uses thunderbolt " +
                             "to attack the robot. Its a critical hit!";
-                } else if (command.contains("TELEPORT ") && command.contains("FLAMETHROWER")) {
+                } else if (command.contains("TELEPORT") && command.contains("FLAMETHROWER")) {
                     if (firstCombo) {
                         secondCombo = true;
                         return "Charmander uses flamethrower to set the robot on fire. It comes at you but you teleport " +
@@ -46,7 +46,7 @@ public class VictoryScene implements Scene{
                     } else {
                         return "Your attacked missed";
                     }
-                } else if (command.contains("FLAMETHROWER ") && command.contains("BLIZZARD") && secondCombo) {
+                } else if (command.contains("FLAMETHROWER") && command.contains("BLIZZARD") && secondCombo) {
                     if (firstCombo && secondCombo) {
                         thirdCombo = true;
                         return "Articuno and Charmander attack at the same time with flamethrower and blizzard. The sudden " +

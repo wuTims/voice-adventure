@@ -115,6 +115,7 @@ public class CharmanderScene implements Scene {
                 }
             case "TAKE":
             case "CAPTURE":
+            case "CATCH":
                 if (command.contains("CHARMANDER")) {
                     if(frozen){
                         if (readTag && !_inventory.checkItem("charmander")) {

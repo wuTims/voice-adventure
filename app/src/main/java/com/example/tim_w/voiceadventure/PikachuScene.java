@@ -169,6 +169,7 @@ public class PikachuScene implements Scene {
             case "TAKE":
             case "CAPTURE":
             case "GET":
+            case "CATCH":
                 if (command.contains("PIKACHU")) {
                     if(sceneItems.contains(Pikachu)){
                         if(openBox){

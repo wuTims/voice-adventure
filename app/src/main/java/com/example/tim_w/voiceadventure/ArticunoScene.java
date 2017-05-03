@@ -73,7 +73,7 @@ public class ArticunoScene implements Scene {
                 }
                 if (command.contains("TAG")) {
                     readTag = true;
-                    return "The number 1 is written on the tag.";
+                    return "The number 9 is written on the tag.";
                 } else {
                     return "Input unknown. Try something else.";
                 }
@@ -91,7 +91,7 @@ public class ArticunoScene implements Scene {
             case "LOOK":
                 if (command.contains("TAG")) {
                     readTag = true;
-                    return "The number 1 is written on the tag.";
+                    return "The number 9 is written on the tag.";
                 }
                 if(command.equals("")){
                     return this._desc;
@@ -109,6 +109,7 @@ public class ArticunoScene implements Scene {
                 }
             case "TAKE":
             case "CAPTURE":
+            case "CATCH":
                 if(readTag && !_inventory.checkItem("articuno")){
                     _inventory.addItem(Articuno);
                     if (readTag) {

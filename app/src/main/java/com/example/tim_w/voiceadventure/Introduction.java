@@ -18,7 +18,7 @@ public class Introduction implements Scene{
                 "EXAMINE, LOOK, READ, or CHECK: for ITEMS, like EXAMINE TABLE or CHECK MAILBOX.\n" +
                 "LOOK: for SCENES, only say LOOK to repeat the scene.\n" +
                 "HELP: for HINTS, only use HELP if you are stuck.\n\n"+
-                "Say START to begin.";
+                "Shake the device and say START to begin.";
     }
 
     @Override

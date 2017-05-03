@@ -135,10 +135,11 @@ public class EnterHouseScene implements Scene {
                         return "This isn't the time to use that.";
                     }
                 case "TAKE":
+                case "GET":
                     if (command.contains("BOOK") && this.sceneItems.contains(book)) {
                         addItem(this.book);
                         return "You put the book in your bag.";
-                    } else if (command.equalsIgnoreCase("ALL") && (sceneItems.contains(this.book) || sceneItems.contains(this.pokeballs))) {
+                    } else if (command.equalsIgnoreCase("BOTH") && (sceneItems.contains(this.book) || sceneItems.contains(this.pokeballs))) {
                         if(sceneItems.contains(this.book) && sceneItems.contains(this.pokeballs)){
                             addItem(this.book);
                             addItem(this.pokeballs);
